@@ -10,15 +10,20 @@ import UIKit
 
 final class ImportExport {
     
-    fileprivate let filename: String = "export"
-    fileprivate var pathURL: String!
-    
+    fileprivate var filename = "export"
+    fileprivate var pathURL: String
     fileprivate var _fileManager: FileManager = FileManager.default
     fileprivate var _fileHandle: FileHandle?
     fileprivate var _scanner: Scanner?
     
     init() {
-        self.pathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
+        self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
+        print(pathURL)
+        
+        if !fileManager.fileExists(atPath: pathURL) {
+            _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
+        }
+        _fileHandle = FileHandle(forUpdatingAtPath: pathURL)
     }
     
     var fileManager: FileManager {
@@ -42,19 +47,6 @@ final class ImportExport {
 
 extension ImportExport {
     
-    func prepareForExport() {
-        
-        do {
-            try _fileManager.removeItem(atPath: pathURL)
-        } catch let error {
-            debugPrint("\(error)")
-        }
-        
-        _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
-        _fileHandle = FileHandle(forUpdatingAtPath: pathURL)
-        _fileHandle?.seekToEndOfFile()
-    }
-    
     func write(line: String) {
         let output = line
         _fileHandle?.write(output.data(using: String.Encoding.utf8)!)
@@ -70,5 +62,10 @@ extension ImportExport {
             let components = str.components(separatedBy: " ")
             newLine(components)
         }
+    }
+    
+    public func insert(block: Block<Person>, address: UInt64) {
+        _fileHandle?.seek(toFileOffset: address)
+        _fileHandle?.write(Data(block.toBytes()))
     }
 }

@@ -10,18 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var importExport = ImportExport()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let block = Block<Person>(size: 2)
-        block.insert(block: block, address: 1)
+        let block = Block<Person>(size: 4, address: 1)
         let person = Person(name: "Dejv", surname: "Unknown", age: 23)
+        _ = block.insert(record: person)
+        
+        importExport.insert(block: block, address: block.address!)
 
-        let bytes = person.toBytes()
-        print(bytes)
-
-        let newPerson = person.fromBytes(bytes: bytes)
-        print(newPerson)
+//        let bytes = person.toBytes()
+//        print(bytes)
+//
+//        let newPerson = person.fromBytes(bytes: bytes)
+//        print(newPerson)
         
     }
 }
