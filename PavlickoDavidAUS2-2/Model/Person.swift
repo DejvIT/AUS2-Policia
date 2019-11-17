@@ -8,7 +8,8 @@
 
 import Foundation
 
-public class Person {
+public class Person: Record {
+    
     
     var _name: String
     var _nameCount: Int
@@ -44,65 +45,61 @@ public class Person {
         return self._age
     }
     
-    public func toBytes() -> [String] {
+    func toBytes() -> [UInt8] {
         
-        var result: [String] = [String]()
+        var result: [UInt8] = [UInt8]()
         
-        result.append(UInt8(self.nameCount).binaryDescription)
-        result.append(UInt8(self.surnameCount).binaryDescription)
+        result.append(UInt8(self.nameCount))
+        result.append(UInt8(self.surnameCount))
         
         var temp = Data(self.name.utf8)
         for char in temp {
-            result.append(UInt8(char).binaryDescription)
+            result.append(UInt8(char))
         }
         
         temp = Data(self.surname.utf8)
         for char in temp {
-            result.append(UInt8(char).binaryDescription)
+            result.append(UInt8(char))
         }
         
-        result.append(UInt8(self.age).binaryDescription)
+        result.append(UInt8(self.age))
         
         return result
     }
     
-    public func fromBytes(bytes: [String]) -> Person {
+    func fromBytes(bytes: [UInt8]) -> Any {
         
-        let nameCount = Int(bytes[0], radix: 2)
-        let surnameCount = Int(bytes[1], radix: 2)
+        let nameCount = Int(bytes[0])
+        let surnameCount = Int(bytes[1])
         var name: String = ""
         var surname: String = ""
-        let age: Int = Int(bytes[bytes.count - 1], radix: 2)!
+        let age: Int = Int(bytes[bytes.count - 1])
         
         var i = 0
-        while i < nameCount! {
-            name += String(Character(UnicodeScalar(Int(bytes[2 + i], radix: 2)!)!))
+        while i < nameCount {
+            name += String(Character(UnicodeScalar(Int(bytes[2 + i]))!))
             i += 1
         }
         
         i = 0
-        while i < surnameCount! {
-            surname += String(Character(UnicodeScalar(Int(bytes[2 + i + nameCount!], radix: 2)!)!))
+        while i < surnameCount {
+            surname += String(Character(UnicodeScalar(Int(bytes[2 + i + nameCount]))!))
             i += 1
         }
         
         return Person(name: name, surname: surname, age: age)
     }
     
-    public func getSize() -> Int {
+    func getSize() -> Int {
         
         return 3 + nameCount + surnameCount
     }
-}
-
-extension BinaryInteger {
-    var binaryDescription: String {
-        var binaryString = ""
-        var internalNumber = self
-        for _ in (1...self.bitWidth) {
-            binaryString.insert(contentsOf: "\(internalNumber & 1)", at: binaryString.startIndex)
-            internalNumber >>= 1
-        }
-        return binaryString
+    
+    func isValid() -> Bool {
+        return true
+    }
+    
+    func compare() -> Bool {
+        return true
     }
 }

@@ -15,8 +15,9 @@
 		32C4464F23800D2F009A98E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464D23800D2F009A98E2 /* LaunchScreen.storyboard */; };
 		32C4465D23803712009A98E2 /* BitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4465C23803712009A98E2 /* BitSet.swift */; };
 		32C4465F238065F2009A98E2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4465E238065F2009A98E2 /* Person.swift */; };
-		32C4466123806886009A98E2 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4466023806886009A98E2 /* Converter.swift */; };
 		32C44665238075FC009A98E2 /* ImportExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C44664238075FC009A98E2 /* ImportExport.swift */; };
+		32C44667238092E4009A98E2 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C44666238092E4009A98E2 /* Block.swift */; };
+		32C4466923809C78009A98E2 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4466823809C78009A98E2 /* Record.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +31,9 @@
 		32C4465023800D2F009A98E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32C4465C23803712009A98E2 /* BitSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitSet.swift; sourceTree = "<group>"; };
 		32C4465E238065F2009A98E2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		32C4466023806886009A98E2 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		32C44664238075FC009A98E2 /* ImportExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportExport.swift; sourceTree = "<group>"; };
+		32C44666238092E4009A98E2 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		32C4466823809C78009A98E2 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +66,10 @@
 		32C4464123800D2D009A98E2 /* PavlickoDavidAUS2-2 */ = {
 			isa = PBXGroup;
 			children = (
-				32C4465B238036FF009A98E2 /* Structures */,
 				32C4464223800D2D009A98E2 /* AppDelegate.swift */,
 				32C4464423800D2D009A98E2 /* SceneDelegate.swift */,
+				32C44664238075FC009A98E2 /* ImportExport.swift */,
+				32C4465B238036FF009A98E2 /* Structures */,
 				32C4465923800D6D009A98E2 /* Controller */,
 				32C4465823800D68009A98E2 /* Data */,
 				32C4465723800D63009A98E2 /* View */,
@@ -113,8 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				32C4465C23803712009A98E2 /* BitSet.swift */,
-				32C4466023806886009A98E2 /* Converter.swift */,
-				32C44664238075FC009A98E2 /* ImportExport.swift */,
+				32C44666238092E4009A98E2 /* Block.swift */,
+				32C4466823809C78009A98E2 /* Record.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -191,11 +194,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C4465F238065F2009A98E2 /* Person.swift in Sources */,
+				32C44667238092E4009A98E2 /* Block.swift in Sources */,
 				32C44665238075FC009A98E2 /* ImportExport.swift in Sources */,
 				32C4464723800D2D009A98E2 /* ViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,
 				32C4465D23803712009A98E2 /* BitSet.swift in Sources */,
-				32C4466123806886009A98E2 /* Converter.swift in Sources */,
+				32C4466923809C78009A98E2 /* Record.swift in Sources */,
 				32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
