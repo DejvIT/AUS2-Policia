@@ -10,6 +10,8 @@ import Foundation
 
 protocol Record {
     
+    func filename() -> String
+    
     func toBytes() -> [UInt8]
     
     func fromBytes(bytes: [UInt8]) -> Any

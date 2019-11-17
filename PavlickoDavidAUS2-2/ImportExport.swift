@@ -8,15 +8,16 @@
 
 import UIKit
 
-final class ImportExport {
+final class ImportExport<T: Record> {
     
-    fileprivate var filename = "export"
+    fileprivate var filename: String
     fileprivate var pathURL: String
     fileprivate var _fileManager: FileManager = FileManager.default
     fileprivate var _fileHandle: FileHandle?
     fileprivate var _scanner: Scanner?
     
-    init() {
+    init(_ record: T) {
+        self.filename = record.filename()
         self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
         print(pathURL)
         
@@ -64,8 +65,19 @@ extension ImportExport {
         }
     }
     
-    public func insert(block: Block<Person>, address: UInt64) {
+    public func insert(block: Block<T>, address: UInt64) {
         _fileHandle?.seek(toFileOffset: address)
         _fileHandle?.write(Data(block.toBytes()))
+    }
+    
+    public func getBlock(address: UInt64, record: T) -> Block<T> {
+        let length = record.getSize()
+        do {
+            try fileHandle.seek(toOffset: address * UInt64(length))
+        } catch {
+            print(error)
+        }
+        let data: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        return Block(bytes: data, size: 1, address: address, record: record)
     }
 }

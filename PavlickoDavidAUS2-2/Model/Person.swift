@@ -10,7 +10,6 @@ import Foundation
 
 public class Person: Record {
     
-    
     var _name: String
     var _nameCount: Int
     var _surname: String
@@ -23,6 +22,14 @@ public class Person: Record {
         self._surname = surname
         self._surnameCount = surname.count
         self._age = age
+    }
+    
+    init() {
+        self._name = ""
+        self._nameCount = 0
+        self._surname = ""
+        self._surnameCount = 0
+        self._age = 0
     }
     
     var name: String {
@@ -45,6 +52,10 @@ public class Person: Record {
         return self._age
     }
     
+    func filename() -> String {
+        return "person"
+    }
+    
     func toBytes() -> [UInt8] {
         
         var result: [UInt8] = [UInt8]()
@@ -57,9 +68,21 @@ public class Person: Record {
             result.append(UInt8(char))
         }
         
+        var emptyBytes = 20 - self.nameCount
+        while emptyBytes > 0 {
+            result.append(UInt8(0))
+            emptyBytes -= 1
+        }
+        
         temp = Data(self.surname.utf8)
         for char in temp {
             result.append(UInt8(char))
+        }
+        
+        emptyBytes = 20 - self.surnameCount
+        while emptyBytes > 0 {
+            result.append(UInt8(0))
+            emptyBytes -= 1
         }
         
         result.append(UInt8(self.age))
@@ -83,7 +106,7 @@ public class Person: Record {
         
         i = 0
         while i < surnameCount {
-            surname += String(Character(UnicodeScalar(Int(bytes[2 + i + nameCount]))!))
+            surname += String(Character(UnicodeScalar(Int(bytes[2 + i + 20]))!))
             i += 1
         }
         
@@ -92,7 +115,7 @@ public class Person: Record {
     
     func getSize() -> Int {
         
-        return 3 + nameCount + surnameCount
+        return 3 + 20 + 20
     }
     
     func isValid() -> Bool {
