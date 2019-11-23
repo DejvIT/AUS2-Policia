@@ -18,9 +18,11 @@ protocol Record {
     
     func getSize() -> Int
     
-    func isValid() -> Bool
+    func toString() -> String
     
-    func compare() -> Bool
+    func getComparator() -> Comparator
+    
+    func emptyBytes() -> [UInt8]
     
 }
 

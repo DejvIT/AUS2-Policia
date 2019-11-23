@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32143CB62389A758009AA0E6 /* BinaryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32143CB52389A758009AA0E6 /* BinaryNode.swift */; };
+		32143CB82389A760009AA0E6 /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32143CB72389A760009AA0E6 /* BinaryTree.swift */; };
+		325CAC02238936BA003789A5 /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC01238936BA003789A5 /* BTree.swift */; };
+		325CAC06238948D5003789A5 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC05238948D5003789A5 /* Test.swift */; };
 		32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464223800D2D009A98E2 /* AppDelegate.swift */; };
 		32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464423800D2D009A98E2 /* SceneDelegate.swift */; };
 		32C4464723800D2D009A98E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464623800D2D009A98E2 /* ViewController.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		32143CB52389A758009AA0E6 /* BinaryNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryNode.swift; sourceTree = "<group>"; };
+		32143CB72389A760009AA0E6 /* BinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
+		325CAC01238936BA003789A5 /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
+		325CAC05238948D5003789A5 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		32C4463F23800D2D009A98E2 /* PavlickoDavidAUS2-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PavlickoDavidAUS2-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4464223800D2D009A98E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32C4464423800D2D009A98E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +55,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32143CB42389A735009AA0E6 /* BinaryTree */ = {
+			isa = PBXGroup;
+			children = (
+				32143CB52389A758009AA0E6 /* BinaryNode.swift */,
+				32143CB72389A760009AA0E6 /* BinaryTree.swift */,
+			);
+			path = BinaryTree;
+			sourceTree = "<group>";
+		};
+		325CABFE23893694003789A5 /* BTree */ = {
+			isa = PBXGroup;
+			children = (
+				325CAC01238936BA003789A5 /* BTree.swift */,
+				32C44666238092E4009A98E2 /* Block.swift */,
+			);
+			path = BTree;
+			sourceTree = "<group>";
+		};
 		32C4463623800D2D009A98E2 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				32C4465E238065F2009A98E2 /* Person.swift */,
+				325CAC05238948D5003789A5 /* Test.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -115,8 +142,9 @@
 		32C4465B238036FF009A98E2 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				32143CB42389A735009AA0E6 /* BinaryTree */,
+				325CABFE23893694003789A5 /* BTree */,
 				32C4465C23803712009A98E2 /* BitSet.swift */,
-				32C44666238092E4009A98E2 /* Block.swift */,
 				32C4466823809C78009A98E2 /* Record.swift */,
 			);
 			path = Structures;
@@ -195,9 +223,13 @@
 			files = (
 				32C4465F238065F2009A98E2 /* Person.swift in Sources */,
 				32C44667238092E4009A98E2 /* Block.swift in Sources */,
+				325CAC02238936BA003789A5 /* BTree.swift in Sources */,
 				32C44665238075FC009A98E2 /* ImportExport.swift in Sources */,
+				325CAC06238948D5003789A5 /* Test.swift in Sources */,
 				32C4464723800D2D009A98E2 /* ViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,
+				32143CB62389A758009AA0E6 /* BinaryNode.swift in Sources */,
+				32143CB82389A760009AA0E6 /* BinaryTree.swift in Sources */,
 				32C4465D23803712009A98E2 /* BitSet.swift in Sources */,
 				32C4466923809C78009A98E2 /* Record.swift in Sources */,
 				32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */,

@@ -118,11 +118,42 @@ public class Person: Record {
         return 3 + 20 + 20
     }
     
-    func isValid() -> Bool {
-        return true
+    func compare() -> Any {
+        return age
     }
     
-    func compare() -> Bool {
-        return true
+    func toString() -> String {
+        return "Meno: \(name), Priezvisko: \(surname), Vek: \(age)"
+    }
+    
+    static let comparator: Comparator = {
+        lhs, rhs in guard let first = lhs as? Person, let second = rhs as? Person else {
+            return ComparisonResult.orderedSame
+        }
+        
+        if (first.age == second.age) {
+            return ComparisonResult.orderedSame
+        } else if (first.age < second.age) {
+            return ComparisonResult.orderedAscending
+        } else {
+            return ComparisonResult.orderedDescending
+        }
+    }
+    
+    public func getComparator() -> Comparator {
+        return Person.comparator
+    }
+    
+    func emptyBytes() -> [UInt8] {
+        
+        var result: [UInt8] = [UInt8]()
+        
+        var i = 0
+        while i < getSize() {
+            result.append((UInt8(0)))
+            i += 1
+        }
+        
+        return result
     }
 }
