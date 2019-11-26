@@ -24,7 +24,7 @@ class Block<T: Record> {
         
         var i = 0
         while (i < size) {
-            self._records.append(object)
+            self._records.append(object.initEmpty() as! T)
             self._sons.append(UInt64.max)
             i += 1
         }
@@ -111,16 +111,81 @@ class Block<T: Record> {
         return self._type.getSize() * self.size + ((self.size + 1) * 8)
     }
     
-    func insert(_ record: T) -> Bool {
+    func insert(_ record: T, _ comparator: Comparator, left: UInt64?, right: UInt64?) -> Bool {
         
         for i in 0..._records.count - 1 {
             if (records[i].isEmpty()) {
                 self._records[i] = record
+                
+                if (right == nil) {
+                    self._sons[i + 1] = UInt64.max
+                } else {
+                    self._sons[i + 1] = right!
+                }
+                
+                if (left == nil) {
+                    self._sons[i] = UInt64.max
+                } else {
+                    self._sons[i] = left!
+                }
+                
+                self._validRecords += 1
                 return true
+            } else {
+    
+                if (comparator(record, records[i]) == .orderedAscending || (i == records.count - 1)) {
+
+                    if (right == nil) {
+                        self._sons.insert(UInt64.max, at: i)
+                    } else {
+                        self._sons.insert(right!, at: i)
+                    }
+                    
+                    if (left == nil) {
+                        self._sons.insert(UInt64.max, at: i)
+                    } else {
+                        self._sons.insert(left!, at: i)
+                    }
+                    
+                    if (isFull()) {
+                        
+                        self._records.insert(record, at: i)
+                        self._validRecords += 1
+                        return true
+                        
+                    } else {
+
+                        self._records.insert(record, at: i)
+                        self._records.removeLast()
+                        self._sons.removeLast()
+                        self._sons.removeLast()
+                        self._validRecords += 1
+                        return true
+                    }
+                }
             }
         }
         
         return false
+    }
+    
+    func cut(at: Int) {
+        
+        while records.count > size {
+            self._records.removeLast()
+            self._validRecords -= 1
+        }
+        
+        while sons.count > size + 1 {
+            self._sons.removeLast()
+        }
+        
+        for i in at...records.count - 1 {
+            self._records[i] = self._type.initEmpty() as! T
+            self._sons[i] = UInt64.max
+            self._validRecords -= 1
+        }
+        self._sons[size] = UInt64.max
     }
     
     func toBytes() -> [UInt8] {

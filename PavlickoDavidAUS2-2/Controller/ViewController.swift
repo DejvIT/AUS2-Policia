@@ -15,11 +15,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = bTreeTest.insert(Test(256))
-        let searched = bTreeTest.search(Test(256))
-        _ = bTreeTest.insert(Test(233))
+        _ = bTreeTest.insert(Test(100))
+        _ = bTreeTest.insert(Test(200))
+        _ = bTreeTest.insert(Test(300))
+        _ = bTreeTest.insert(Test(400))
         
-        _ = bTreeTest.insert(Test(999))
+        _ = bTreeTest.insert(Test(500))
+        _ = bTreeTest.insert(Test(111))
     }
 }
 
