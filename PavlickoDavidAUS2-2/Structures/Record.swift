@@ -10,7 +10,9 @@ import Foundation
 
 protocol Record {
     
-    func filename() -> String
+    func construct() -> Any
+    
+    func initEmpty() -> Any
     
     func toBytes() -> [UInt8]
     
@@ -20,9 +22,7 @@ protocol Record {
     
     func toString() -> String
     
-    func getComparator() -> Comparator
-    
-    func emptyBytes() -> [UInt8]
+    func isEmpty() -> Bool
     
 }
 

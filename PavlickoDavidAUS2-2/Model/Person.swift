@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Person: Record {
+public class Person {   //TODO : Record
     
     var _name: String
     var _nameCount: Int

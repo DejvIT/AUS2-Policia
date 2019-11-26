@@ -7,24 +7,53 @@
 //
 
 import Foundation
+import UIKit
 
 final class BTree<T: Record> {
-  
-    private let comparator: Comparator
-    public private(set)var _root: UInt64 = 0
-    private var _order: Int
-    private var _blockSize: Int
-    private var _count: Int = 0
     
-    public init(_ comparator: @escaping Comparator, _ order: Int, _ blockSize: Int) {
+    private let comparator: Comparator
+    fileprivate var filename: String
+    fileprivate var pathURL: String
+    fileprivate var _fileManager: FileManager = FileManager.default
+    fileprivate var _fileHandle: FileHandle?
+    fileprivate var _scanner: Scanner?
+    
+    private var _root: UInt64 = 0
+    private var _firstFreeBlock: UInt64?
+    private var _lastFreeBlock: UInt64?
+    private var _order: Int
+    
+    public init(_ type: T, _ comparator: @escaping Comparator, _ filename: String, _ order: Int) {
         self.comparator = comparator
+        self.filename = filename
         self._order = order
-        self._blockSize = blockSize
+
+        self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
+        print("Cesta: \(pathURL)")
+        
+        if (!_fileManager.fileExists(atPath: pathURL)) {
+            _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
+        }
+        _fileHandle = FileHandle(forUpdatingAtPath: pathURL)
+        
+        write(Block<T>(type, order - 1, root))
     }
     
-    var order: Int {
+    var fileManager: FileManager {
         get {
-            return self._order
+            return self._fileManager
+        }
+    }
+    
+    var fileHandle: FileHandle {
+        get {
+            return self._fileHandle!
+        }
+    }
+    
+    var scanner: Scanner {
+        get {
+            return self._scanner!
         }
     }
     
@@ -34,88 +63,132 @@ final class BTree<T: Record> {
         }
     }
     
-    var blockSize: Int {
+    var firstFreeBlock: UInt64? {
         get {
-            return self._blockSize
+            return self._firstFreeBlock
         }
     }
     
-    var count: Int {
+    var lastFreeBlock: UInt64? {
         get {
-            return self._count
+            return self._lastFreeBlock
+        }
+    }
+    
+    var order: Int {
+        get {
+            return self._order
+        }
+    }
+    
+    var blockSize: Int {
+        get {
+            return self._order - 1
         }
     }
     
     //MARK: - Insert
     public func insert(_ newItem: T) -> Bool {
         
-        if count == 0 {
-            let block = Block<T>(newItem, blockSize)
-            self._count += 1
-            return block.insert(newItem)
+        var block = getBlock(type: newItem, address: root, blockSize: blockSize)
+        var result = false
+            
+        if block.validRecords == 0 {
+            result = block.insert(newItem)
         } else {
-
-            let fileManager = ImportExport(newItem)
-            let block = fileManager.getBlock(address: root, blockSize: blockSize, type: newItem)
+            while true {
             
-            let pivotBlock = block
-            if (pivotBlock.insert(newItem)) {
-                return true
-            } else {
-                
+                for i in 0...block.records.count - 1 {
+                    
+                    switch (comparator(newItem, block.records[i])) {
+                    case .orderedSame:
+                        result = false
+                    case .orderedAscending:
+                        if (block.getLeft(i) == UInt64.max) {
+                            if (block.isFull()) {
+                                //Insert into full block
+                            } else {
+                                return block.insert(newItem)
+                            }
+                        } else {
+                            block = getBlock(type: newItem, address: block.getLeft(i), blockSize: block.size)
+                            break
+                        }
+                    case .orderedDescending:
+                        if (block.getRight(i) == UInt64.max) {
+                            if (i == block.records.count) {
+                                //Insert into full block
+                            }
+                        } else {
+                            block = getBlock(type: newItem, address: block.getRight(i), blockSize: block.size)
+                            break
+                        }
+                    default:
+                        result = false
+                    }
+                }
             }
-            
         }
         
-        return true
+        write(block)
+        return result
     }
     
     //MARK: - Search
-    public func search(_ item: T) -> Block<T>? {
-
-        if count > 0 {
-            let fileManager = ImportExport(item)
-            let pivotBlock = fileManager.getBlock(address: root, blockSize: blockSize, type: item)
-            
-            while true {
-                
-//                for record in pivotBlock._records.inOrder() {
-//                    switch (comparator(item, record)) {
-//                    case .orderedSame:
-//                        return pivotBlock
-//                    case .orderedAscending:
-//                        if (pivot.left == nil) {
-//                            if (!delete) {
-//                                self.splay(node: pivot)
-//                            }
-//                            if (closest) {
-//                                return pivot
-//                            } else {
-//                                return nil
-//                            }
-//                        } else {
-//                            pivot = pivot.left!
-//                        }
-//                    case .orderedDescending:
-//                        if (pivot.right == nil) {
-//                            if (!delete) {
-//                                self.splay(node: pivot)
-//                            }
-//                            if (closest) {
-//                                return pivot.right
-//                            }
-//                            return nil
-//                        } else {
-//                            pivot = pivot.right!
-//                        }
-//                    default:
-//                        return nil
-//                    }
-//                }
-                
-            }
-        } else {
+    public func search(_ item: T) -> T? {
+        
+        var block = getBlock(type: item, address: root, blockSize: blockSize)
+        
+        if (block.validRecords == 0) {
             return nil
         }
+        
+        while true {
+    
+            for i in 0...block.validRecords - 1 {
+                
+                switch (comparator(item, block.records[i])) {
+                case .orderedSame:
+                    return block.records[i]
+                case .orderedAscending:
+                    if (block.getLeft(i) == UInt64.max) {
+                        return nil
+                    } else {
+                        block = getBlock(type: item, address: block.getLeft(i), blockSize: block.size)
+                        break
+                    }
+                case .orderedDescending:
+                    if ((block.getRight(i) == UInt64.max) && (i == block.records.count)) {
+                        return nil
+                    } else {
+                        block = getBlock(type: item, address: block.getRight(i), blockSize: block.size)
+                        break
+                    }
+                default:
+                    return nil
+                }
+            }
+        }
+    }
+}
+
+extension BTree {
+    
+    public func write(_ block: Block<T>) {
+        _fileHandle?.seek(toFileOffset: block.address)
+        _fileHandle?.write(Data(block.toBytes()))
+    }
+    
+    public func getBlock(type: T, address: UInt64, blockSize: Int) -> Block<T> {
+        
+        let block = Block<T>(type, blockSize, address)
+        let length = block.getBlockByteSize()
+        do {
+            try fileHandle.seek(toOffset: address)
+        } catch {
+            print(error)
+        }
+        let data: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        return Block(type: type, bytes: data, size: block.size, address: address)
     }
 }

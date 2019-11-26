@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var bTreeTest: BTree<Test>! = BTree<Test>(Test.comparator, 5, 4)
+    var bTreeTest: BTree<Test>! = BTree<Test>(Test(), Test.comparator, "test", 5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         _ = bTreeTest.insert(Test(256))
+        let searched = bTreeTest.search(Test(256))
         _ = bTreeTest.insert(Test(233))
         
         _ = bTreeTest.insert(Test(999))

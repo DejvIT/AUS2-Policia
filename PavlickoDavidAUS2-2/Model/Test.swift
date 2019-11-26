@@ -17,15 +17,15 @@ public class Test: Record {
     }
     
     init() {
-        self._value = -1
+        self._value = Int.max
+    }
+    
+    func construct() -> Any {
+        return Test()
     }
     
     var value: Int {
         return self._value
-    }
-    
-    func filename() -> String {
-        return "test"
     }
     
     func toBytes() -> [UInt8] {
@@ -177,21 +177,16 @@ public class Test: Record {
         }
     }
     
-    public func getComparator() -> Comparator {
-        return Test.comparator
+    func isEmpty() -> Bool {
+        
+        if (value == Int.max) {
+            return true
+        }
+        return false
     }
     
-    func emptyBytes() -> [UInt8] {
-        
-        var result: [UInt8] = [UInt8]()
-        
-        var i = 0
-        while i < getSize() {
-            result.append((UInt8(0)))
-            i += 1
-        }
-        
-        return result
+    func initEmpty() -> Any {
+        return Test() as Any
     }
     
 }
