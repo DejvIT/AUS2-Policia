@@ -105,7 +105,7 @@ public class Test: Record {
     }
     
     func toString() -> String {
-        return "Value: \(value)"
+        return "\(value)"
     }
     
     func uInt8ArrayToDecimalString(_ uint8array: [UInt8]) -> String {

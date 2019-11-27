@@ -22,6 +22,8 @@ class ViewController: UIViewController {
         
         _ = bTreeTest.insert(Test(500))
         _ = bTreeTest.insert(Test(111))
+        
+        print(bTreeTest.fileToString(type: Test()))
     }
 }
 

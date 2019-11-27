@@ -217,6 +217,35 @@ class Block<T: Record> {
         return false
     }
     
+    func toString() -> String {
+        
+        var result: String = "\nAdress: \(address)\nRecords:\n"
+        
+        result += "["
+        for record in records {
+            if (record.isEmpty()) {
+                result += " NIL "
+            } else {
+                result += " \(record.toString()) "
+            }
+        }
+        result += "]\n"
+        
+        result += "Adressess of the sons:\n"
+        result += "["
+        
+        for son in sons {
+            if (son == UInt64.max) {
+                result += " NIL "
+            } else {
+                result += " \(son) "
+            }
+        }
+        result += "]\n"
+        
+        return result
+    }
+    
     func decimalStringToUInt8Array(_ decimalString: String) -> [UInt8] {
 
         // Convert input string into array of Int digits

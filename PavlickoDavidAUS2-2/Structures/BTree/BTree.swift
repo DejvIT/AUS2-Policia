@@ -29,7 +29,7 @@ final class BTree<T: Record> {
         self._order = order
 
         self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
-        print("Cesta: \(pathURL)")
+        print("Filepath: \(pathURL)\n")
         
         if (!_fileManager.fileExists(atPath: pathURL)) {
             _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
@@ -62,7 +62,7 @@ final class BTree<T: Record> {
         }
         
         while result.count != size {
-            tempBytes = decimalStringToUInt8Array("255")
+            tempBytes = decimalStringToUInt8Array(String(UInt64.max))
             for temp in tempBytes {
                 result.append(temp)
             }
@@ -402,5 +402,63 @@ extension BTree {
 
         // Reverse the digits array, convert them to String, and join them
         return digits.reversed().map(String.init).joined()
+    }
+}
+
+//MARK: - Read File
+extension BTree {
+    
+    public func fileToString(type: T) -> String {
+        
+        var result: String = ""
+        
+        let length = type.getSize() * (order - 1) + 40
+        do {
+            try fileHandle.seek(toOffset: 0)
+        } catch {
+            print(error)
+        }
+        
+        let metaBlock: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        var object: [UInt8] = []
+        var j = 0
+        while j < 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let rootAddress = uInt8ArrayToDecimalString(object)
+        result += "Root address: \(rootAddress)\n"
+        
+        object = []
+        while j < 2 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let firstFreeBlockAddress = uInt8ArrayToDecimalString(object)
+        if (UInt64.max == UInt64(firstFreeBlockAddress)) {
+            result += "First free block address: NIL\n"
+        } else {
+            result += "First free block address: \(firstFreeBlockAddress)\n"
+        }
+        
+        object = []
+        while j < 3 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let lastBlockAddress = uInt8ArrayToDecimalString(object)
+        result += "Last block address: \(lastBlockAddress)\n"
+        
+        var address = length
+        while UInt64(address) < UInt64(lastBlockAddress)! {
+            let readBlock = getBlock(type: type, address: UInt64(address), blockSize: order - 1)
+            result += readBlock.toString()
+            address += length
+        }
+        
+        return result
     }
 }
