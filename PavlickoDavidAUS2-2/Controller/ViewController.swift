@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var generator = Generator(1000, "generator")
+    var generator = Generator(5, "generator")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        generator.bTreeInsert(loop: 10000, progressBar: nil)
+//        generator.bTreeInsert(loop: 10000, progressBar: nil)
+        generator.bTree(loop: 20, insert: 10, search: 10, delete: 0, progressBar: nil)
         print(generator.getResult())
         
 //        lectureTest()

@@ -79,13 +79,16 @@ class Generator {
                 
             } else if (random <= (insertRatio + searchRatio)) {
                 
-                let randomNumber = Test(Int.random(in: 0 ... maximum))
-                print("\(loop + 1).) 😎 Searching number \(randomNumber.value) 😂")
-                
-                if ((bTreeTest.search(randomNumber)) != nil) {
-                    print("\(randomNumber.value) successfully searched!")
+                if (testArray.isEmpty) {
+                    loop += 1
                 } else {
-                    print("\(randomNumber.value) not found!")
+                    let randomNumber = testArray.randomElement()!
+                    let rnTest = Test(randomNumber)
+                    if (bTreeTest.search(rnTest) != nil) {
+                        print("\(loop + 1).) 😎 Searching number \(rnTest.value) 😂")
+                    } else {
+                        loop += 1
+                    }
                 }
                 
             } else if (random <= (insertRatio + searchRatio + deleteRatio)) {
