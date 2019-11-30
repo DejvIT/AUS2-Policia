@@ -100,7 +100,6 @@ public class Test: Record {
     }
     
     func getSize() -> Int {
-        
         return 8
     }
     

@@ -23,7 +23,16 @@ final class BTree<T: Record> {
     private var _lastBlock: UInt64
     private var _order: Int
     
+    //Test array
+    private var _readArray: Array<Block<T>> = Array()
+    
     public init(_ type: T, _ comparator: @escaping Comparator, _ filename: String, _ order: Int) {
+        
+        var order = order
+        if (order < 3) {
+            order = 3
+        }
+        
         self.comparator = comparator
         self.filename = filename
         self._order = order
@@ -36,11 +45,12 @@ final class BTree<T: Record> {
         }
         _fileHandle = FileHandle(forUpdatingAtPath: pathURL)
         
-        self._root = UInt64(type.getSize() * (order - 1) + 40)
+        self._root = UInt64(type.getSize() * (order - 1) + (order * 8))
         let block = Block<T>(type, order - 1, self._root)
         self._lastBlock = 2 * UInt64(block.getBlockByteSize())
         write(block)
         writeMetaBlock(block.getBlockByteSize())
+        print("Block size set to: \(block.getBlockByteSize()) bytes.\n")
     }
     
     func writeMetaBlock(_ size: Int) {
@@ -61,7 +71,7 @@ final class BTree<T: Record> {
             result.append(temp)
         }
         
-        while result.count != size {
+        while (result.count < size) {
             tempBytes = decimalStringToUInt8Array(String(UInt64.max))
             for temp in tempBytes {
                 result.append(temp)
@@ -135,7 +145,13 @@ final class BTree<T: Record> {
         } else {
             while true {
             
+                var newPivot = false
+                
                 for i in 0...block.records.count - 1 {
+                    
+                    if (newPivot) {
+                        break
+                    }
                     
                     switch (comparator(newItem, block.records[i])) {
                     case .orderedSame:
@@ -155,6 +171,7 @@ final class BTree<T: Record> {
                         } else {
                             block = getBlock(type: newItem, address: block.getLeft(i), blockSize: block.size)
                             stack.append(block)
+                            newPivot = true
                             break
                         }
                     case .orderedDescending:
@@ -162,9 +179,10 @@ final class BTree<T: Record> {
                             
                             return insertIntoFullBlock(stack: stack, newItem: newItem, left: nil, right: nil)
                             
-                        } else if (block.getRight(i) != UInt64.max) {
+                        } else if ((block.getRight(i) != UInt64.max) && (i == block.records.count - 1)) {
                             block = getBlock(type: newItem, address: block.getRight(i), blockSize: block.size)
                             stack.append(block)
+                            newPivot = true
                             break
                         }
                         
@@ -183,13 +201,20 @@ final class BTree<T: Record> {
         var stack = stack
         var block = stack.last
         stack.removeLast()
+        var splitting = true
+        var inserted = false
         
-        if (stack.isEmpty) {
-            //Split root
-            let newRootBlock = getEmptyBlock(type: newItem)
-            let newRightBlock = getEmptyBlock(type: newItem)
+        while (splitting) {
             
-            if (block!.insert(newItem, comparator, left: nil, right: nil)) {
+            if (stack.isEmpty) {
+                
+                let newRootBlock = getEmptyBlock(type: newItem)
+                let newRightBlock = getEmptyBlock(type: newItem)
+                
+                if !inserted {
+                    inserted = block!.insert(newItem, comparator, left: nil, right: nil)
+                }
+                
                 let median = block!.records.count / 2
                 
                 _ = newRootBlock.insert((block?.records[median])!, comparator, left: block?.address, right: newRightBlock.address)
@@ -205,11 +230,48 @@ final class BTree<T: Record> {
                 write(newRootBlock)
                 write(block!)
                 write(newRightBlock)
-                
+
+                splitting = false
                 return true
+                
+            } else {
+                
+                let newRightBlock = getEmptyBlock(type: newItem)
+                
+                if !inserted {
+                    inserted = block!.insert(newItem, comparator, left: nil, right: nil)
+                }
+                
+                let median = block!.records.count / 2
+
+                let parentBlock = stack.last
+                stack.removeLast()
+                
+                if (!(parentBlock?.isFull())!) {
+                    splitting = false
+                }
+                
+                _ = parentBlock!.insert((block!.records[median]), comparator, left: block?.address, right: newRightBlock.address)
+                
+                for i in median + 1...((block?.records.count)! - 1) {
+                    _ = newRightBlock.insert((block?.records[i])!, comparator, left: block?.getLeft(i), right: block?.getRight(i))
+                }
+                
+                block?.cut(at: median)
+                
+                writeMetaBlock((block?.getBlockByteSize())!)
+                if (!splitting) {
+                    write(parentBlock!)
+                }
+                write(block!)
+                write(newRightBlock)
+                
+                block = parentBlock
+                
+                if (!splitting) {
+                    return true
+                }
             }
-        } else {
-            //TODO
         }
         
         return false
@@ -239,9 +301,15 @@ final class BTree<T: Record> {
         }
         
         while true {
+            
+            var newPivot = false
     
-            for i in 0...block.validRecords - 1 {
+            for var i in 0...block.records.count - 1 {
                 
+                if (newPivot) {
+                    break
+                }
+        
                 switch (comparator(item, block.records[i])) {
                 case .orderedSame:
                     return block.records[i]
@@ -250,6 +318,7 @@ final class BTree<T: Record> {
                         return nil
                     } else {
                         block = getBlock(type: item, address: block.getLeft(i), blockSize: block.size)
+                        newPivot = true
                         break
                     }
                 case .orderedDescending:
@@ -257,6 +326,7 @@ final class BTree<T: Record> {
                         return nil
                     } else if (block.getRight(i) != UInt64.max) {
                         block = getBlock(type: item, address: block.getRight(i), blockSize: block.size)
+                        newPivot = true
                         break
                     }
                 default:
@@ -264,6 +334,13 @@ final class BTree<T: Record> {
                 }
             }
         }
+    }
+    
+    //MARK: - Delete
+    public func delete(_ item: T) -> Bool {
+        
+        //TODO
+        return true
     }
 }
 
@@ -408,11 +485,17 @@ extension BTree {
 //MARK: - Read File
 extension BTree {
     
+    var readArray: Array<Block<T>> {
+        get {
+            return self._readArray
+        }
+    }
+    
     public func fileToString(type: T) -> String {
         
         var result: String = ""
         
-        let length = type.getSize() * (order - 1) + 40
+        let length = type.getSize() * (blockSize) + (order * 8)
         do {
             try fileHandle.seek(toOffset: 0)
         } catch {
@@ -450,11 +533,15 @@ extension BTree {
         }
         
         let lastBlockAddress = uInt8ArrayToDecimalString(object)
-        result += "Last block address: \(lastBlockAddress)\n"
+        result += "Next block address: \(lastBlockAddress)\n"
         
         var address = length
         while UInt64(address) < UInt64(lastBlockAddress)! {
             let readBlock = getBlock(type: type, address: UInt64(address), blockSize: order - 1)
+            
+            //Checking
+            self._readArray.append(readBlock)
+            
             result += readBlock.toString()
             address += length
         }

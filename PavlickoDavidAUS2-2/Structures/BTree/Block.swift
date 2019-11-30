@@ -133,8 +133,16 @@ class Block<T: Record> {
                 return true
             } else {
     
-                if (comparator(record, records[i]) == .orderedAscending || (i == records.count - 1)) {
+                if ((comparator(record, records[i]) == .orderedAscending) || (i == records.count - 1)) {
 
+                    var sonRemoved = false
+                    if (left != nil) {
+                        if (getLeft(i) == left) {
+                            self._sons.remove(at: i)
+                            sonRemoved = true
+                        }
+                    }
+                    
                     if (right == nil) {
                         self._sons.insert(UInt64.max, at: i)
                     } else {
@@ -149,7 +157,11 @@ class Block<T: Record> {
                     
                     if (isFull()) {
                         
-                        self._records.insert(record, at: i)
+                        if ((comparator(record, records[i]) == .orderedDescending) && (i == records.count - 1)) {
+                            self._records.append(record)
+                        } else {
+                            self._records.insert(record, at: i)
+                        }
                         self._validRecords += 1
                         return true
                         
@@ -158,7 +170,9 @@ class Block<T: Record> {
                         self._records.insert(record, at: i)
                         self._records.removeLast()
                         self._sons.removeLast()
-                        self._sons.removeLast()
+                        if (!sonRemoved) {
+                            self._sons.removeLast()
+                        }
                         self._validRecords += 1
                         return true
                     }
@@ -182,7 +196,7 @@ class Block<T: Record> {
         
         for i in at...records.count - 1 {
             self._records[i] = self._type.initEmpty() as! T
-            self._sons[i] = UInt64.max
+            self._sons[i + 1] = UInt64.max
             self._validRecords -= 1
         }
         self._sons[size] = UInt64.max
