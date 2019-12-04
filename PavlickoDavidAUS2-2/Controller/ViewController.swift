@@ -10,16 +10,32 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var generator = Generator(5, "generator")
+    var generator = Generator(10, "generator")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        generator.bTreeInsert(loop: 10000, progressBar: nil)
-        generator.bTree(loop: 20, insert: 10, search: 10, delete: 0, progressBar: nil)
+
+        generator.bTree(loop: 10000, insert: 5, search: 2, delete: 0, progressBar: nil)
+//        generator.insertExact()
         print(generator.getResult())
+//        print(generator.bTreeTest.fileToString(type: Test()))
         
 //        lectureTest()
+        
+//        drivingLicenseTest()
+    }
+    
+    public func drivingLicenseTest() {
+        
+        let bTreeTest: BTree<DrivingLicense>! = BTree<DrivingLicense>(DrivingLicense(), DrivingLicense.comparator, "drivinglicense", 3)
+        
+        _ = bTreeTest.insert(DrivingLicense(id: 1, name: "Jozi", surname: "Pelko", dateTime: 2141231, validLicense: true, offenses: 0))
+        _ = bTreeTest.insert(DrivingLicense(id: 2, name: "Petko", surname: "Palko", dateTime: 2141231, validLicense: true, offenses: 1))
+        print(bTreeTest.fileToString(type: DrivingLicense()))
+        _ = bTreeTest.insert(DrivingLicense(id: 3, name: "Jebko", surname: "Kokutek", dateTime: 2141231, validLicense: true, offenses: 2))
+        _ = bTreeTest.insert(DrivingLicense(id: 4, name: "Misulo", surname: "Karafiat", dateTime: 2141231, validLicense: true, offenses: 3))
+        
+        print(bTreeTest.fileToString(type: DrivingLicense()))
     }
     
     public func lectureTest() {

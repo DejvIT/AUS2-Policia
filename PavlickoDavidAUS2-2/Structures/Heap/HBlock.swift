@@ -1,21 +1,21 @@
 //
-//  Block.swift
+//  HBlock.swift
 //  PavlickoDavidAUS2-2
 //
-//  Created by MaestroDavo on 16/11/2019.
+//  Created by MaestroDavo on 02/12/2019.
 //  Copyright © 2019 David Pavlicko. All rights reserved.
 //
 
 import Foundation
 
-class Block<T: Record> {
+class HBlock<T: Record> {
     
     private var _address: UInt64
     private var _size: Int
     private var _records: [T] = []
-    private var _sons: [UInt64] = []
     private var _validRecords: Int = 0
     private let _type: T
+    private let _nextFreeBlock: UInt64 = UInt64.max
     
     init(_ object: T, _ size: Int, _ address: UInt64) {
         self._type = object
@@ -25,10 +25,8 @@ class Block<T: Record> {
         var i = 0
         while (i < size) {
             self._records.append(object.initEmpty() as! T)
-            self._sons.append(UInt64.max)
             i += 1
         }
-        self._sons.append(UInt64.max)
     }
     
     init(type: T, bytes: [UInt8], size: Int, address: UInt64) {
@@ -52,19 +50,6 @@ class Block<T: Record> {
                 self._validRecords += 1
             }
             
-            i += 1
-        }
-        
-        i = 0
-        while (i < self.size + 1) {
-            var j = 0
-            
-            var object: [UInt8] = []
-            while j < 8 {
-                object.append(bytes[j + (i * 8) + (type.getSize() * records.count)])
-                j += 1
-            }
-            _ = _sons.append(UInt64(uInt8ArrayToDecimalString(object)) ?? UInt64.max)
             i += 1
         }
     }
@@ -99,113 +84,29 @@ class Block<T: Record> {
         }
     }
     
-    var sons: [UInt64] {
+    var nextFreeBlock: UInt64? {
         get {
-            return self._sons
+            return self._nextFreeBlock
         }
     }
     
-    func getLeft(_ index: Int) -> UInt64 {
-        return sons[index]
-    }
-    
-    func getRight(_ index: Int) -> UInt64 {
-        return sons[index + 1]
-    }
-    
     func getBlockByteSize() -> Int {
-        return self.type.getSize() * self.size + ((self.size + 1) * 8)
+        return self.type.getSize() * self.size
     }
     
-    func insert(_ record: T, _ comparator: Comparator, left: UInt64?, right: UInt64?) -> Bool {
+    func insert(_ record: T) -> Bool {
         
         for i in 0..._records.count - 1 {
+            
             if (records[i].isEmpty()) {
+
                 self._records[i] = record
-                
-                if (right == nil) {
-                    self._sons[i + 1] = UInt64.max
-                } else {
-                    self._sons[i + 1] = right!
-                }
-                
-                if (left == nil) {
-                    self._sons[i] = UInt64.max
-                } else {
-                    self._sons[i] = left!
-                }
-                
                 self._validRecords += 1
                 return true
-            } else {
-    
-                if ((comparator(record, records[i]) == .orderedAscending) || (i == records.count - 1)) {
-
-                    var sonRemoved = false
-                    if (left != nil) {
-                        if (getLeft(i) == left) {
-                            self._sons.remove(at: i)
-                            sonRemoved = true
-                        }
-                    }
-                    
-                    if (right == nil) {
-                        self._sons.insert(UInt64.max, at: i)
-                    } else {
-                        self._sons.insert(right!, at: i)
-                    }
-                    
-                    if (left == nil) {
-                        self._sons.insert(UInt64.max, at: i)
-                    } else {
-                        self._sons.insert(left!, at: i)
-                    }
-                    
-                    if (isFull()) {
-                        
-                        if ((comparator(record, records[i]) == .orderedDescending) && (i == records.count - 1)) {
-                            self._records.append(record)
-                        } else {
-                            self._records.insert(record, at: i)
-                        }
-                        self._validRecords += 1
-                        return true
-                        
-                    } else {
-
-                        self._records.insert(record, at: i)
-                        self._records.removeLast()
-                        self._sons.removeLast()
-                        if (!sonRemoved) {
-                            self._sons.removeLast()
-                        }
-                        self._validRecords += 1
-                        return true
-                    }
-                }
             }
         }
         
         return false
-    }
-    
-    func cut(at: Int) {
-        
-        while records.count > size {
-            self._records.removeLast()
-            self._validRecords -= 1
-        }
-        
-        while sons.count > size + 1 {
-            self._sons.removeLast()
-        }
-        
-        for i in at...records.count - 1 {
-            self._records[i] = self._type.initEmpty() as! T
-            self._sons[i + 1] = UInt64.max
-            self._validRecords -= 1
-        }
-        self._sons[size] = UInt64.max
     }
     
     func toBytes() -> [UInt8] {
@@ -213,13 +114,6 @@ class Block<T: Record> {
         
         for record in records {
             let tempBytes = record.toBytes()
-            for temp in tempBytes {
-                result.append(temp)
-            }
-        }
-        
-        for son in sons {
-            let tempBytes = decimalStringToUInt8Array(String(son))
             for temp in tempBytes {
                 result.append(temp)
             }
@@ -247,18 +141,6 @@ class Block<T: Record> {
                 result += " NIL "
             } else {
                 result += " \(record.toString()) "
-            }
-        }
-        result += "]\n"
-        
-        result += "Adressess of the sons:\n"
-        result += "["
-        
-        for son in sons {
-            if (son == UInt64.max) {
-                result += " NIL "
-            } else {
-                result += " \(son) "
             }
         }
         result += "]\n"

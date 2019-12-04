@@ -32,7 +32,7 @@ class Generator {
     
     public func insertExact() {
         
-        let array: Array<Int> = [31,36,22,12,30,23,11,12,35,14]
+        let array: Array<Int> = [16,4,2,14,234,42,3,2131,43,23,523,21,4,5,345,6,23,32,34,5,63,5,3]
         
         for item in array {
             if (bTreeTest.insert(Test(item))) {
@@ -59,6 +59,10 @@ class Generator {
         while loop > 0 {
             loop -= 1
             
+            if loop == 45 {
+                
+            }
+            
             if loop % hundreth == 0 && progressBar != nil {
                 DispatchQueue.main.async {
                     progressBar?.progress += 0.01
@@ -67,9 +71,9 @@ class Generator {
             
             let random: Double = Double.random(in: 0...1)
             if (random <= insertRatio) {
-
-                let randomNumber = Test(Int.random(in: 0 ... maximum))
                 
+                let randomNumber = Test(Int.random(in: 0 ... maximum))
+
                 if (bTreeTest.insert(randomNumber)) {
                     print("\(loop + 1).) 😊 Inserting number \(randomNumber.value).")
                     self._testArray.append(randomNumber.value)
@@ -151,7 +155,7 @@ class Generator {
             }
                 
             let randomNumber = Test(Int.random(in: 0 ... maximum))
-            print("\(loop + 1).) 😎 Searching number \(String(describing: randomNumber)) 😂")
+            print("\(loop + 1).) 😎 Searching number \(String(describing: randomNumber.value)) 😂")
             
             if ((bTreeTest.search(randomNumber)) != nil) {
                 print("\(randomNumber.value) successfully searched!")

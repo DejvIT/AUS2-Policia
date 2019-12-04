@@ -20,7 +20,7 @@ final class BTree<T: Record> {
     
     private var _root: UInt64
     private var _firstFreeBlock: UInt64 = UInt64.max
-    private var _lastBlock: UInt64
+    private var _nextBlock: UInt64
     private var _order: Int
     
     //Test array
@@ -47,7 +47,7 @@ final class BTree<T: Record> {
         
         self._root = UInt64(type.getSize() * (order - 1) + (order * 8))
         let block = Block<T>(type, order - 1, self._root)
-        self._lastBlock = 2 * UInt64(block.getBlockByteSize())
+        self._nextBlock = 2 * UInt64(block.getBlockByteSize())
         write(block)
         writeMetaBlock(block.getBlockByteSize())
         print("Block size set to: \(block.getBlockByteSize()) bytes.\n")
@@ -66,7 +66,7 @@ final class BTree<T: Record> {
             result.append(temp)
         }
         
-        tempBytes = decimalStringToUInt8Array(String(self._lastBlock))
+        tempBytes = decimalStringToUInt8Array(String(self._nextBlock))
         for temp in tempBytes {
             result.append(temp)
         }
@@ -112,9 +112,9 @@ final class BTree<T: Record> {
         }
     }
     
-    var lastBlock: UInt64 {
+    var nextBlock: UInt64 {
         get {
-            return self._lastBlock
+            return self._nextBlock
         }
     }
     
@@ -284,10 +284,10 @@ final class BTree<T: Record> {
         if (firstFreeBlock != UInt64.max) {
             block = getBlock(type: type, address: firstFreeBlock!, blockSize: blockSize)
         } else {
-            block = Block(type, blockSize, lastBlock)
+            block = Block(type, blockSize, nextBlock)
         }
 
-        self._lastBlock = lastBlock + UInt64(block.getBlockByteSize())
+        self._nextBlock = nextBlock + UInt64(block.getBlockByteSize())
         return block
     }
     
@@ -304,7 +304,7 @@ final class BTree<T: Record> {
             
             var newPivot = false
     
-            for var i in 0...block.records.count - 1 {
+            for i in 0...block.records.count - 1 {
                 
                 if (newPivot) {
                     break
@@ -322,7 +322,7 @@ final class BTree<T: Record> {
                         break
                     }
                 case .orderedDescending:
-                    if ((block.getRight(i) == UInt64.max) && (i == block.records.count)) {
+                    if ((block.getRight(i) == UInt64.max) && (i == block.records.count - 1)) {
                         return nil
                     } else if (block.getRight(i) != UInt64.max) {
                         block = getBlock(type: item, address: block.getRight(i), blockSize: block.size)
@@ -344,6 +344,7 @@ final class BTree<T: Record> {
     }
 }
 
+//MARK: - Write
 extension BTree {
     
     public func write(_ block: Block<T>) {

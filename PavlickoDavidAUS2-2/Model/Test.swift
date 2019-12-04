@@ -20,10 +20,6 @@ public class Test: Record {
         self._value = Int.max
     }
     
-    func construct() -> Any {
-        return Test()
-    }
-    
     var value: Int {
         return self._value
     }

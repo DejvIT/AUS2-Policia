@@ -11,8 +11,13 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    static let shared = AppDelegate()
+    
+    let friBlue = UIColor(red: 0/255.0, green: 0/255.0, blue: 230/255.0, alpha: 1.0)    //0000e6
+    let friRed = UIColor(red: 230/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)     //e60000
+    
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -31,7 +36,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 

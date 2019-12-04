@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Person {   //TODO : Record
+public class Person: Record {
     
     var _name: String
     var _nameCount: Int
@@ -155,5 +155,17 @@ public class Person {   //TODO : Record
         }
         
         return result
+    }
+    
+    func initEmpty() -> Any {
+        return Person() as Any
+    }
+    
+    func isEmpty() -> Bool {
+        if (name == "" && nameCount == 0 && surname == "" && surnameCount == 0 && age == 0) {
+            return true
+        }
+        
+        return false
     }
 }

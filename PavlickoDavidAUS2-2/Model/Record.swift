@@ -10,8 +10,6 @@ import Foundation
 
 protocol Record {
     
-    func construct() -> Any
-    
     func initEmpty() -> Any
     
     func toBytes() -> [UInt8]
@@ -24,16 +22,4 @@ protocol Record {
     
     func isEmpty() -> Bool
     
-}
-
-extension BinaryInteger {
-    var binaryDescription: String {
-        var binaryString = ""
-        var internalNumber = self
-        for _ in (1...self.bitWidth) {
-            binaryString.insert(contentsOf: "\(internalNumber & 1)", at: binaryString.startIndex)
-            internalNumber >>= 1
-        }
-        return binaryString
-    }
 }

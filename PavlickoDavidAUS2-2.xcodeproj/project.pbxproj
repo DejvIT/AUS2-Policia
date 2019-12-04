@@ -7,26 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		322E6C672395C7FC00F58D84 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322E6C662395C7FC00F58D84 /* Car.swift */; };
+		322E6C692395CBF600F58D84 /* CarVin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322E6C682395CBF600F58D84 /* CarVin.swift */; };
+		323E90EC23955CBE008B44E1 /* HBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323E90EB23955CBE008B44E1 /* HBlock.swift */; };
+		323E90EE23955CD8008B44E1 /* HeapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323E90ED23955CD8008B44E1 /* HeapFile.swift */; };
 		325CAC02238936BA003789A5 /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC01238936BA003789A5 /* BTree.swift */; };
 		325CAC06238948D5003789A5 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC05238948D5003789A5 /* Test.swift */; };
-		327F63302392FB3A00E4D177 /* TestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F632F2392FB3A00E4D177 /* TestGenerator.swift */; };
+		3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB992396DBE600B2D873 /* DrivingLicense.swift */; };
+		3271BB9C2396EA2500B2D873 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB9B2396EA2500B2D873 /* Helper.swift */; };
+		327F63302392FB3A00E4D177 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F632F2392FB3A00E4D177 /* Generator.swift */; };
 		32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464223800D2D009A98E2 /* AppDelegate.swift */; };
 		32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464423800D2D009A98E2 /* SceneDelegate.swift */; };
 		32C4464723800D2D009A98E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464623800D2D009A98E2 /* ViewController.swift */; };
 		32C4464A23800D2D009A98E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464823800D2D009A98E2 /* Main.storyboard */; };
 		32C4464C23800D2F009A98E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464B23800D2F009A98E2 /* Assets.xcassets */; };
 		32C4464F23800D2F009A98E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464D23800D2F009A98E2 /* LaunchScreen.storyboard */; };
-		32C4465D23803712009A98E2 /* BitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4465C23803712009A98E2 /* BitSet.swift */; };
 		32C4465F238065F2009A98E2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4465E238065F2009A98E2 /* Person.swift */; };
 		32C44667238092E4009A98E2 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C44666238092E4009A98E2 /* Block.swift */; };
 		32C4466923809C78009A98E2 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4466823809C78009A98E2 /* Record.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		322E6C662395C7FC00F58D84 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		322E6C682395CBF600F58D84 /* CarVin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarVin.swift; sourceTree = "<group>"; };
+		323E90EB23955CBE008B44E1 /* HBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBlock.swift; sourceTree = "<group>"; };
+		323E90ED23955CD8008B44E1 /* HeapFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeapFile.swift; sourceTree = "<group>"; };
 		325CAC01238936BA003789A5 /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
 		325CAC05238948D5003789A5 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
-		327F632F2392FB3A00E4D177 /* TestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenerator.swift; sourceTree = "<group>"; };
-		32C4463F23800D2D009A98E2 /* PavlickoDavidAUS2-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PavlickoDavidAUS2-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3271BB992396DBE600B2D873 /* DrivingLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingLicense.swift; sourceTree = "<group>"; };
+		3271BB9B2396EA2500B2D873 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		327F632F2392FB3A00E4D177 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
+		32C4463F23800D2D009A98E2 /* FRI Police.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRI Police.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4464223800D2D009A98E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32C4464423800D2D009A98E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		32C4464623800D2D009A98E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -34,7 +45,6 @@
 		32C4464B23800D2F009A98E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32C4464E23800D2F009A98E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32C4465023800D2F009A98E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32C4465C23803712009A98E2 /* BitSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitSet.swift; sourceTree = "<group>"; };
 		32C4465E238065F2009A98E2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		32C44666238092E4009A98E2 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		32C4466823809C78009A98E2 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
@@ -51,6 +61,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		323E90EA23955BFC008B44E1 /* Heap */ = {
+			isa = PBXGroup;
+			children = (
+				323E90ED23955CD8008B44E1 /* HeapFile.swift */,
+				323E90EB23955CBE008B44E1 /* HBlock.swift */,
+			);
+			path = Heap;
+			sourceTree = "<group>";
+		};
 		325CABFE23893694003789A5 /* BTree */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +90,7 @@
 		32C4464023800D2D009A98E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32C4463F23800D2D009A98E2 /* PavlickoDavidAUS2-2.app */,
+				32C4463F23800D2D009A98E2 /* FRI Police.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,9 +113,14 @@
 		32C4465623800D5B009A98E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				327F632F2392FB3A00E4D177 /* Generator.swift */,
+				32C4466823809C78009A98E2 /* Record.swift */,
+				322E6C662395C7FC00F58D84 /* Car.swift */,
+				322E6C682395CBF600F58D84 /* CarVin.swift */,
 				32C4465E238065F2009A98E2 /* Person.swift */,
 				325CAC05238948D5003789A5 /* Test.swift */,
-				327F632F2392FB3A00E4D177 /* TestGenerator.swift */,
+				3271BB992396DBE600B2D873 /* DrivingLicense.swift */,
+				3271BB9B2396EA2500B2D873 /* Helper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -105,8 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				32C4464823800D2D009A98E2 /* Main.storyboard */,
-				32C4464B23800D2F009A98E2 /* Assets.xcassets */,
 				32C4464D23800D2F009A98E2 /* LaunchScreen.storyboard */,
+				32C4464B23800D2F009A98E2 /* Assets.xcassets */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -129,9 +153,8 @@
 		32C4465B238036FF009A98E2 /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				323E90EA23955BFC008B44E1 /* Heap */,
 				325CABFE23893694003789A5 /* BTree */,
-				32C4465C23803712009A98E2 /* BitSet.swift */,
-				32C4466823809C78009A98E2 /* Record.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -153,7 +176,7 @@
 			);
 			name = "PavlickoDavidAUS2-2";
 			productName = "PavlickoDavidAUS2-2";
-			productReference = 32C4463F23800D2D009A98E2 /* PavlickoDavidAUS2-2.app */;
+			productReference = 32C4463F23800D2D009A98E2 /* FRI Police.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -208,13 +231,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C4465F238065F2009A98E2 /* Person.swift in Sources */,
-				327F63302392FB3A00E4D177 /* TestGenerator.swift in Sources */,
+				327F63302392FB3A00E4D177 /* Generator.swift in Sources */,
+				322E6C672395C7FC00F58D84 /* Car.swift in Sources */,
+				322E6C692395CBF600F58D84 /* CarVin.swift in Sources */,
 				32C44667238092E4009A98E2 /* Block.swift in Sources */,
+				3271BB9C2396EA2500B2D873 /* Helper.swift in Sources */,
+				323E90EE23955CD8008B44E1 /* HeapFile.swift in Sources */,
 				325CAC02238936BA003789A5 /* BTree.swift in Sources */,
+				323E90EC23955CBE008B44E1 /* HBlock.swift in Sources */,
 				325CAC06238948D5003789A5 /* Test.swift in Sources */,
+				3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */,
 				32C4464723800D2D009A98E2 /* ViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,
-				32C4465D23803712009A98E2 /* BitSet.swift in Sources */,
 				32C4466923809C78009A98E2 /* Record.swift in Sources */,
 				32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */,
 			);
@@ -368,7 +396,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "sk.davooo.p.PavlickoDavidAUS2-2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FRI Police";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -386,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "sk.davooo.p.PavlickoDavidAUS2-2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "FRI Police";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
