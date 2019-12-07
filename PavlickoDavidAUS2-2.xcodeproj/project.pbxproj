@@ -18,11 +18,10 @@
 		327F63302392FB3A00E4D177 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F632F2392FB3A00E4D177 /* Generator.swift */; };
 		32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464223800D2D009A98E2 /* AppDelegate.swift */; };
 		32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464423800D2D009A98E2 /* SceneDelegate.swift */; };
-		32C4464723800D2D009A98E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464623800D2D009A98E2 /* ViewController.swift */; };
+		32C4464723800D2D009A98E2 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464623800D2D009A98E2 /* TestViewController.swift */; };
 		32C4464A23800D2D009A98E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464823800D2D009A98E2 /* Main.storyboard */; };
 		32C4464C23800D2F009A98E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464B23800D2F009A98E2 /* Assets.xcassets */; };
 		32C4464F23800D2F009A98E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C4464D23800D2F009A98E2 /* LaunchScreen.storyboard */; };
-		32C4465F238065F2009A98E2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4465E238065F2009A98E2 /* Person.swift */; };
 		32C44667238092E4009A98E2 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C44666238092E4009A98E2 /* Block.swift */; };
 		32C4466923809C78009A98E2 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4466823809C78009A98E2 /* Record.swift */; };
 /* End PBXBuildFile section */
@@ -40,12 +39,11 @@
 		32C4463F23800D2D009A98E2 /* FRI Police.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRI Police.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4464223800D2D009A98E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32C4464423800D2D009A98E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		32C4464623800D2D009A98E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		32C4464623800D2D009A98E2 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		32C4464923800D2D009A98E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		32C4464B23800D2F009A98E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32C4464E23800D2F009A98E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32C4465023800D2F009A98E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32C4465E238065F2009A98E2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		32C44666238092E4009A98E2 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		32C4466823809C78009A98E2 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,9 +115,8 @@
 				32C4466823809C78009A98E2 /* Record.swift */,
 				322E6C662395C7FC00F58D84 /* Car.swift */,
 				322E6C682395CBF600F58D84 /* CarVin.swift */,
-				32C4465E238065F2009A98E2 /* Person.swift */,
-				325CAC05238948D5003789A5 /* Test.swift */,
 				3271BB992396DBE600B2D873 /* DrivingLicense.swift */,
+				325CAC05238948D5003789A5 /* Test.swift */,
 				3271BB9B2396EA2500B2D873 /* Helper.swift */,
 			);
 			path = Model;
@@ -145,7 +142,7 @@
 		32C4465923800D6D009A98E2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				32C4464623800D2D009A98E2 /* ViewController.swift */,
+				32C4464623800D2D009A98E2 /* TestViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -230,7 +227,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32C4465F238065F2009A98E2 /* Person.swift in Sources */,
 				327F63302392FB3A00E4D177 /* Generator.swift in Sources */,
 				322E6C672395C7FC00F58D84 /* Car.swift in Sources */,
 				322E6C692395CBF600F58D84 /* CarVin.swift in Sources */,
@@ -241,7 +237,7 @@
 				323E90EC23955CBE008B44E1 /* HBlock.swift in Sources */,
 				325CAC06238948D5003789A5 /* Test.swift in Sources */,
 				3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */,
-				32C4464723800D2D009A98E2 /* ViewController.swift in Sources */,
+				32C4464723800D2D009A98E2 /* TestViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,
 				32C4466923809C78009A98E2 /* Record.swift in Sources */,
 				32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */,

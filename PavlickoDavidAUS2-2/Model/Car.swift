@@ -34,6 +34,10 @@ class Car: Record {
         return -1
     }
 
+    func getKeyToString() -> String {
+        return "\(self._vin)"
+    }
+    
     func toString() -> String {
         var result: String = ""
         

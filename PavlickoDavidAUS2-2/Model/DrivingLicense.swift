@@ -98,7 +98,7 @@ class DrivingLicense: Record {
         
         var emptyBytes = 35 - nameCount
         while emptyBytes > 0 {
-            result.append(UInt8(0))
+            result.append(UInt8.max)
             emptyBytes -= 1
         }
         
@@ -109,7 +109,7 @@ class DrivingLicense: Record {
         
         emptyBytes = 35 - surnameCount
         while emptyBytes > 0 {
-            result.append(UInt8(0))
+            result.append(UInt8.max)
             emptyBytes -= 1
         }
         
@@ -165,6 +165,10 @@ class DrivingLicense: Record {
     
     func getSize() -> Int {
         return 8 + 35 + 1 + 35 + 1 + 8 + 1 + 1
+    }
+    
+    func getKeyToString() -> String {
+        return "\(id)"
     }
     
     func toString() -> String {

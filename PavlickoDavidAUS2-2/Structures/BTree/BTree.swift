@@ -72,10 +72,7 @@ final class BTree<T: Record> {
         }
         
         while (result.count < size) {
-            tempBytes = decimalStringToUInt8Array(String(UInt64.max))
-            for temp in tempBytes {
-                result.append(temp)
-            }
+            result.append(UInt8.max)
         }
         
         _fileHandle?.seek(toFileOffset: 0)

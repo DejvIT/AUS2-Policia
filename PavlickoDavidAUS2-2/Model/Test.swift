@@ -99,6 +99,10 @@ public class Test: Record {
         return 8
     }
     
+    func getKeyToString() -> String {
+        return "\(value)"
+    }
+    
     func toString() -> String {
         return "\(value)"
     }

@@ -18,6 +18,8 @@ protocol Record {
     
     func getSize() -> Int
     
+    func getKeyToString() -> String
+    
     func toString() -> String
     
     func isEmpty() -> Bool

@@ -143,38 +143,6 @@ class Block<T: Record> {
         }
         
         return true
-        
-//        if (records[position].isEmpty()) {
-//            self._records[position] = record
-//
-//            if (right == nil) {
-//                self._sons[position + 1] = UInt64.max
-//            } else {
-//                self._sons[position + 1] = right!
-//            }
-//
-//            if (left == nil) {
-//                self._sons[position] = UInt64.max
-//            } else {
-//                self._sons[position] = left!
-//            }
-//
-//            self._validRecords += 1
-//            return true
-//        } else {
-//
-//            if (right != nil) {
-//                self._sons.insert(right!, at: position + 1)
-//            } else {
-//                self._sons.insert(UInt64.max, at: position + 1)
-//            }
-//
-//            self._records.insert(record, at: position)
-//            self._records.removeLast()
-//            self._sons.removeLast()
-//            self._validRecords += 1
-//            return true
-//        }
     }
     
     func cut(at: Int) {
@@ -234,7 +202,7 @@ class Block<T: Record> {
             if (record.isEmpty()) {
                 result += " NIL "
             } else {
-                result += " \(record.toString()) "
+                result += " \(record.getKeyToString()) "
             }
         }
         result += "]\n"
