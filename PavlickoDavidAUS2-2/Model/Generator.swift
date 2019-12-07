@@ -32,9 +32,10 @@ class Generator {
     
     public func insertExact() {
         
-        let array: Array<Int> = [16,4,2,14,234,42,3,2131,43,23,523,21,4,5,345,6,23,32,34,5,63,5,3]
+        let array: Array<Int> = [24,40,79,1,78,74,40,29,10,37,30,10,15,52,29,1,63,77,64,15]
         
         for item in array {
+            
             if (bTreeTest.insert(Test(item))) {
                 self._testArray.append(item)
             }
@@ -88,11 +89,8 @@ class Generator {
                 } else {
                     let randomNumber = testArray.randomElement()!
                     let rnTest = Test(randomNumber)
-                    if (bTreeTest.search(rnTest) != nil) {
-                        print("\(loop + 1).) 😎 Searching number \(rnTest.value) 😂")
-                    } else {
-                        loop += 1
-                    }
+                    print("\(loop + 1).) 😎 Searching number \(rnTest.value) 😂")
+                    _ = bTreeTest.search(rnTest)
                 }
                 
             } else if (random <= (insertRatio + searchRatio + deleteRatio)) {
@@ -139,30 +137,30 @@ class Generator {
     }
     
     // MARK: - BTree search
-    public func bTreeSearch(loop: Int, progressBar: UIProgressView?) {
+    public func bTreeSearch() {
 
-        let maximum = loop * 4
-        var loop = loop
-        let hundreth: Int = Int(Double(loop) / Double(100))
+        print("\nSearching...")
+        var notFound = 0
         
-        while loop > 0 {
-            loop -= 1
+        if testArray.count > 0 {
             
-            if loop % hundreth == 0 && progressBar != nil {
-                DispatchQueue.main.async {
-                    progressBar?.progress += 0.01
+            for value in testArray {
+                    
+                if (bTreeTest.search(Test(value)) == nil) {
+                    notFound += 1
                 }
             }
-                
-            let randomNumber = Test(Int.random(in: 0 ... maximum))
-            print("\(loop + 1).) 😎 Searching number \(String(describing: randomNumber.value)) 😂")
             
-            if ((bTreeTest.search(randomNumber)) != nil) {
-                print("\(randomNumber.value) successfully searched!")
-            } else {
-                print("\(randomNumber.value) not found!")
-            }
+        } else {
+            print("There is nothing to search!")
         }
+        
+        if (notFound > 0) {
+            print("Not found count: \(notFound)")
+        } else {
+            print("Every value has been successfully searched!")
+        }
+        
     }
     
     // MARK: - BTree delete

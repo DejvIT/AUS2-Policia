@@ -117,76 +117,64 @@ class Block<T: Record> {
         return self.type.getSize() * self.size + ((self.size + 1) * 8)
     }
     
-    func insert(_ record: T, _ comparator: Comparator, left: UInt64?, right: UInt64?) -> Bool {
+    func insert(_ record: T, _ position: Int, left: UInt64?, right: UInt64?) -> Bool {
         
-        for i in 0..._records.count - 1 {
-            if (records[i].isEmpty()) {
-                self._records[i] = record
-                
-                if (right == nil) {
-                    self._sons[i + 1] = UInt64.max
-                } else {
-                    self._sons[i + 1] = right!
-                }
-                
-                if (left == nil) {
-                    self._sons[i] = UInt64.max
-                } else {
-                    self._sons[i] = left!
-                }
-                
-                self._validRecords += 1
-                return true
-            } else {
-    
-                if ((comparator(record, records[i]) == .orderedAscending) || (i == records.count - 1)) {
-
-                    var sonRemoved = false
-                    if (left != nil) {
-                        if (getLeft(i) == left) {
-                            self._sons.remove(at: i)
-                            sonRemoved = true
-                        }
-                    }
-                    
-                    if (right == nil) {
-                        self._sons.insert(UInt64.max, at: i)
-                    } else {
-                        self._sons.insert(right!, at: i)
-                    }
-                    
-                    if (left == nil) {
-                        self._sons.insert(UInt64.max, at: i)
-                    } else {
-                        self._sons.insert(left!, at: i)
-                    }
-                    
-                    if (isFull()) {
-                        
-                        if ((comparator(record, records[i]) == .orderedDescending) && (i == records.count - 1)) {
-                            self._records.append(record)
-                        } else {
-                            self._records.insert(record, at: i)
-                        }
-                        self._validRecords += 1
-                        return true
-                        
-                    } else {
-
-                        self._records.insert(record, at: i)
-                        self._records.removeLast()
-                        self._sons.removeLast()
-                        if (!sonRemoved) {
-                            self._sons.removeLast()
-                        }
-                        self._validRecords += 1
-                        return true
-                    }
-                }
+        var newRoot = false
+        if (left != nil) {
+            self._sons.insert(left!, at: position)
+            newRoot = true
+        }
+        
+        if (right != nil) {
+            self._sons.insert(right!, at: position + 1)
+        } else {
+            self._sons.insert(UInt64.max, at: position + 1)
+        }
+        
+        self._records.insert(record, at: position)
+        self._validRecords += 1
+        
+        if ((records.last?.isEmpty())!) {
+            self._records.removeLast()
+            self._sons.removeLast()
+            if (newRoot) {
+                self._sons.removeLast()
             }
         }
         
-        return false
+        return true
+        
+//        if (records[position].isEmpty()) {
+//            self._records[position] = record
+//
+//            if (right == nil) {
+//                self._sons[position + 1] = UInt64.max
+//            } else {
+//                self._sons[position + 1] = right!
+//            }
+//
+//            if (left == nil) {
+//                self._sons[position] = UInt64.max
+//            } else {
+//                self._sons[position] = left!
+//            }
+//
+//            self._validRecords += 1
+//            return true
+//        } else {
+//
+//            if (right != nil) {
+//                self._sons.insert(right!, at: position + 1)
+//            } else {
+//                self._sons.insert(UInt64.max, at: position + 1)
+//            }
+//
+//            self._records.insert(record, at: position)
+//            self._records.removeLast()
+//            self._sons.removeLast()
+//            self._validRecords += 1
+//            return true
+//        }
     }
     
     func cut(at: Int) {

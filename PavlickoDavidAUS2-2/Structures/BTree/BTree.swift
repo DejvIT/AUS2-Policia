@@ -138,7 +138,7 @@ final class BTree<T: Record> {
         stack.append(block)
             
         if block.validRecords == 0 {
-            if (block.insert(newItem, comparator, left: nil, right: nil)) {
+            if (block.insert(newItem, 0, left: nil, right: nil)) {
                 write(block)
                 return true
             }
@@ -160,10 +160,10 @@ final class BTree<T: Record> {
                         if (block.getLeft(i) == UInt64.max) {
                             if (block.isFull()) {
                                 
-                                return insertIntoFullBlock(stack: stack, newItem: newItem, left: nil, right: nil)
+                                return insertIntoFullBlock(stack: stack, newItem: newItem, position: i, left: nil, right: nil)
                                 
                             } else {
-                                if (block.insert(newItem, comparator, left: nil, right: nil)) {
+                                if (block.insert(newItem, i, left: nil, right: nil)) {
                                     write(block)
                                     return true
                                 }
@@ -177,7 +177,7 @@ final class BTree<T: Record> {
                     case .orderedDescending:
                         if (block.getRight(i) == UInt64.max && block.isFull() && (i == block.records.count - 1)) {
                             
-                            return insertIntoFullBlock(stack: stack, newItem: newItem, left: nil, right: nil)
+                            return insertIntoFullBlock(stack: stack, newItem: newItem, position: i + 1, left: nil, right: nil)
                             
                         } else if ((block.getRight(i) != UInt64.max) && (i == block.records.count - 1)) {
                             block = getBlock(type: newItem, address: block.getRight(i), blockSize: block.size)
@@ -196,7 +196,7 @@ final class BTree<T: Record> {
         return false
     }
     
-    func insertIntoFullBlock(stack: [Block<T>], newItem: T, left: UInt64?, right: UInt64?) -> Bool {
+    func insertIntoFullBlock(stack: [Block<T>], newItem: T, position: Int, left: UInt64?, right: UInt64?) -> Bool {
         
         var stack = stack
         var block = stack.last
@@ -212,16 +212,20 @@ final class BTree<T: Record> {
                 let newRightBlock = getEmptyBlock(type: newItem)
                 
                 if !inserted {
-                    inserted = block!.insert(newItem, comparator, left: nil, right: nil)
+                    inserted = block!.insert(newItem, position, left: nil, right: nil)
                 }
                 
                 let median = block!.records.count / 2
                 
-                _ = newRootBlock.insert((block?.records[median])!, comparator, left: block?.address, right: newRightBlock.address)
+                _ = newRootBlock.insert((block?.records[median])!, 0, left: block?.address, right: newRightBlock.address)
                 self._root = newRootBlock.address
                 
                 for i in median + 1...((block?.records.count)! - 1) {
-                    _ = newRightBlock.insert((block?.records[i])!, comparator, left: block?.getLeft(i), right: block?.getRight(i))
+                    if (i == median + 1) {
+                        _ = newRightBlock.insert((block?.records[i])!, i - (median + 1), left: block?.getLeft(i), right: block?.getRight(i))
+                    } else {
+                        _ = newRightBlock.insert((block?.records[i])!, i - (median + 1), left: nil, right: block?.getRight(i))
+                    }
                 }
                 
                 block?.cut(at: median)
@@ -239,7 +243,7 @@ final class BTree<T: Record> {
                 let newRightBlock = getEmptyBlock(type: newItem)
                 
                 if !inserted {
-                    inserted = block!.insert(newItem, comparator, left: nil, right: nil)
+                    inserted = block!.insert(newItem, position, left: nil, right: nil)
                 }
                 
                 let median = block!.records.count / 2
@@ -251,10 +255,31 @@ final class BTree<T: Record> {
                     splitting = false
                 }
                 
-                _ = parentBlock!.insert((block!.records[median]), comparator, left: block?.address, right: newRightBlock.address)
+                var parentExtended = false
+                for i in 0...parentBlock!.records.count - 1 {
+                    if (parentExtended) {
+                        break
+                    }
+                    switch (comparator(newItem, parentBlock!.records[i])) {
+                    case .orderedAscending:
+                        _ = parentBlock!.insert((block!.records[median]), i, left: nil, right: newRightBlock.address)
+                        parentExtended = true
+                    case .orderedDescending:
+                        if (i == parentBlock!.records.count - 1) {
+                            _ = parentBlock!.insert((block!.records[median]), i + 1, left: nil, right: newRightBlock.address)
+                            parentExtended = true
+                        }
+                    default:
+                        break
+                    }
+                }
                 
                 for i in median + 1...((block?.records.count)! - 1) {
-                    _ = newRightBlock.insert((block?.records[i])!, comparator, left: block?.getLeft(i), right: block?.getRight(i))
+                    if (i == median + 1) {
+                        _ = newRightBlock.insert((block?.records[i])!, i - (median + 1), left: block?.getLeft(i), right: block?.getRight(i))
+                    } else {
+                        _ = newRightBlock.insert((block?.records[i])!, i - (median + 1), left: nil, right: block?.getRight(i))
+                    }
                 }
                 
                 block?.cut(at: median)
@@ -324,7 +349,7 @@ final class BTree<T: Record> {
                 case .orderedDescending:
                     if ((block.getRight(i) == UInt64.max) && (i == block.records.count - 1)) {
                         return nil
-                    } else if (block.getRight(i) != UInt64.max) {
+                    } else if (block.getRight(i) != UInt64.max && (i == block.records.count - 1)) {
                         block = getBlock(type: item, address: block.getRight(i), blockSize: block.size)
                         newPivot = true
                         break
