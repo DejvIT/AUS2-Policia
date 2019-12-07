@@ -15,6 +15,8 @@
 		3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB992396DBE600B2D873 /* DrivingLicense.swift */; };
 		3271BB9C2396EA2500B2D873 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB9B2396EA2500B2D873 /* Helper.swift */; };
 		32765021239C06F800D66BFB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765020239C06F800D66BFB /* Date.swift */; };
+		32765023239C3D0800D66BFB /* CarID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765022239C3D0800D66BFB /* CarID.swift */; };
+		32765025239C3D1500D66BFB /* CarVin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765024239C3D1500D66BFB /* CarVin.swift */; };
 		327F63302392FB3A00E4D177 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F632F2392FB3A00E4D177 /* Generator.swift */; };
 		32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464223800D2D009A98E2 /* AppDelegate.swift */; };
 		32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464423800D2D009A98E2 /* SceneDelegate.swift */; };
@@ -35,6 +37,8 @@
 		3271BB992396DBE600B2D873 /* DrivingLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingLicense.swift; sourceTree = "<group>"; };
 		3271BB9B2396EA2500B2D873 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		32765020239C06F800D66BFB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		32765022239C3D0800D66BFB /* CarID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarID.swift; sourceTree = "<group>"; };
+		32765024239C3D1500D66BFB /* CarVin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarVin.swift; sourceTree = "<group>"; };
 		327F632F2392FB3A00E4D177 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		32C4463F23800D2D009A98E2 /* FRI Police.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRI Police.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4464223800D2D009A98E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,9 +119,11 @@
 				32C4466823809C78009A98E2 /* Record.swift */,
 				3271BB992396DBE600B2D873 /* DrivingLicense.swift */,
 				322E6C662395C7FC00F58D84 /* Car.swift */,
+				32765022239C3D0800D66BFB /* CarID.swift */,
+				32765024239C3D1500D66BFB /* CarVin.swift */,
 				325CAC05238948D5003789A5 /* Test.swift */,
-				3271BB9B2396EA2500B2D873 /* Helper.swift */,
 				32765020239C06F800D66BFB /* Date.swift */,
+				3271BB9B2396EA2500B2D873 /* Helper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -234,8 +240,10 @@
 				323E90EE23955CD8008B44E1 /* HeapFile.swift in Sources */,
 				325CAC02238936BA003789A5 /* BTree.swift in Sources */,
 				323E90EC23955CBE008B44E1 /* HBlock.swift in Sources */,
+				32765023239C3D0800D66BFB /* CarID.swift in Sources */,
 				325CAC06238948D5003789A5 /* Test.swift in Sources */,
 				3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */,
+				32765025239C3D1500D66BFB /* CarVin.swift in Sources */,
 				32765021239C06F800D66BFB /* Date.swift in Sources */,
 				32C4464723800D2D009A98E2 /* TestViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,

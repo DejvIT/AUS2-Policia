@@ -22,9 +22,9 @@ class DrivingLicense: Record {
     init(id: UInt64, name: String, surname: String, expiration: Date, validLicense: Bool, offenses: Int) {
         self._id = id
         self._name = name
-        self._nameCount = UInt8(name.count)
+        self._nameCount = UInt8(name.count > name.maxSurname ? name.maxName : name.count)
         self._surname = surname
-        self._surnameCount = UInt8(surname.count)
+        self._surnameCount = UInt8(surname.count > surname.maxSurname ? surname.maxSurname : surname.count)
         self._expiration = expiration
         self._validLicense = validLicense
         self._trafficOffenses = UInt8(offenses)
@@ -194,5 +194,4 @@ class DrivingLicense: Record {
             return ComparisonResult.orderedDescending
         }
     }
-    
 }

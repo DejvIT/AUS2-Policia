@@ -157,7 +157,7 @@ final class BTree<T: Record> {
                         if (block.getLeft(i) == UInt64.max) {
                             if (block.isFull()) {
                                 
-                                return insertIntoFullBlock(stack: stack, newItem: newItem, position: i, left: nil, right: nil)
+                                return insertIntoFullBlock(stack: stack, newItem: newItem, position: i)
                                 
                             } else {
                                 if (block.insert(newItem, i, left: nil, right: nil)) {
@@ -174,7 +174,7 @@ final class BTree<T: Record> {
                     case .orderedDescending:
                         if (block.getRight(i) == UInt64.max && block.isFull() && (i == block.records.count - 1)) {
                             
-                            return insertIntoFullBlock(stack: stack, newItem: newItem, position: i + 1, left: nil, right: nil)
+                            return insertIntoFullBlock(stack: stack, newItem: newItem, position: i + 1)
                             
                         } else if ((block.getRight(i) != UInt64.max) && (i == block.records.count - 1)) {
                             block = getBlock(type: newItem, address: block.getRight(i), blockSize: block.size)
@@ -193,7 +193,7 @@ final class BTree<T: Record> {
         return false
     }
     
-    func insertIntoFullBlock(stack: [Block<T>], newItem: T, position: Int, left: UInt64?, right: UInt64?) -> Bool {
+    func insertIntoFullBlock(stack: [Block<T>], newItem: T, position: Int) -> Bool {
         
         var stack = stack
         var block = stack.last

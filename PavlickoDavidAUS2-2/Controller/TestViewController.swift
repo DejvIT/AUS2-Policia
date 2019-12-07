@@ -16,10 +16,13 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func onTest(_ sender: UIButton) {
-        testGenerator()
+//        testGenerator()
 //        lectureTest()
 //        drivingLicenseTest()
 //        printIntMaxes()
+//        carTest()
+//        carIDTest()
+        carVINTest()
     }
     
     public func printIntMaxes() {
@@ -34,7 +37,7 @@ class TestViewController: UIViewController {
     
     public func testGenerator() {
 
-            let generator = Generator(5, "generator")
+            let generator = Generator(5, "testing_generator")
             generator.bTree(loop: 10000, insert: 10, search: 0, delete: 0, progressBar: nil)
 //            generator.insertExact()
             generator.bTreeSearch()
@@ -42,10 +45,67 @@ class TestViewController: UIViewController {
 //            print(generator.bTreeTest.fileToString(type: Test()))
     }
     
+    public func carVINTest() {
+        
+        let bTreeTest: BTree<CarVIN>! = BTree<CarVIN>(CarVIN(), CarVIN.comparator, "cars_vin", 3)
+        
+        _ = bTreeTest.insert(CarVIN(nil, "5"))
+        _ = bTreeTest.insert(CarVIN(nil, "3"))
+        _ = bTreeTest.insert(CarVIN(nil, "2"))
+        _ = bTreeTest.insert(CarVIN(nil, "8"))
+        _ = bTreeTest.insert(CarVIN(nil, "6"))
+        _ = bTreeTest.insert(CarVIN(nil, "1"))
+        _ = bTreeTest.insert(CarVIN(nil, "4"))
+        _ = bTreeTest.insert(CarVIN(nil, "9"))
+        _ = bTreeTest.insert(CarVIN(nil, "7"))
+        
+        print(bTreeTest.fileToString(type: CarVIN()))
+    }
+    
+    public func carIDTest() {
+        
+        let bTreeTest: BTree<CarID>! = BTree<CarID>(CarID(), CarID.comparator, "cars_id", 3)
+        
+        _ = bTreeTest.insert(CarID(nil, "5"))
+        _ = bTreeTest.insert(CarID(nil, "3"))
+        _ = bTreeTest.insert(CarID(nil, "2"))
+        _ = bTreeTest.insert(CarID(nil, "8"))
+        _ = bTreeTest.insert(CarID(nil, "6"))
+        _ = bTreeTest.insert(CarID(nil, "1"))
+        _ = bTreeTest.insert(CarID(nil, "4"))
+        _ = bTreeTest.insert(CarID(nil, "9"))
+        _ = bTreeTest.insert(CarID(nil, "7"))
+        
+        print(bTreeTest.fileToString(type: CarID()))
+    }
+    
+    public func carTest() {
+        
+        let bTreeTest: BTree<Car>! = BTree<Car>(Car(), Car.comparator, "cars", 3)
+        let date = Date(23, 6, 1996)
+        
+        _ = bTreeTest.insert(Car(id: "1", vin: "VIN", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "5", vin: "VIN 2", axles: 2, weight: 950, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "13", vin: "VIN 3", axles: 3, weight: 1500, inSearch: true, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "11", vin: "VINko", axles: 2, weight: 1200, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "0", vin: "VINlofas", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "8", vin: "VINmrdko", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "9", vin: "VIN aa", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "A", vin: "VINsa", axles: 4, weight: 850, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "c", vin: "ds", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "G", vin: "sadfc", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "L", vin: "fdsfdoi", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "X", vin: "3r4fr", axles: 4, weight: 777, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "9", vin: "4r3fef", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "3", vin: "34ffdsd", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date))
+        _ = bTreeTest.insert(Car(id: "P", vin: "43fd", axles: 4, weight: 1437, inSearch: false, endEC: date, endTC: date))
+        
+        print(bTreeTest.fileToString(type: Car()))
+    }
+    
     public func drivingLicenseTest() {
         
-        let bTreeTest: BTree<DrivingLicense>! = BTree<DrivingLicense>(DrivingLicense(), DrivingLicense.comparator, "drivinglicense", 3)
-        
+        let bTreeTest: BTree<DrivingLicense>! = BTree<DrivingLicense>(DrivingLicense(), DrivingLicense.comparator, "driving_licenses", 3)
         let date = Date(23, 6, 1996)
         
         _ = bTreeTest.insert(DrivingLicense(id: 1, name: "David", surname: "Adin", expiration: date, validLicense: true, offenses: 0))
@@ -64,7 +124,7 @@ class TestViewController: UIViewController {
         
         //A B C D E F G H I J K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
         //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-        let bTreeTest: BTree<Test>! = BTree<Test>(Test(), Test.comparator, "test", 5)
+        let bTreeTest: BTree<Test>! = BTree<Test>(Test(), Test.comparator, "lecture_btree", 5)
         
         _ = bTreeTest.insert(Test(2))
         _ = bTreeTest.insert(Test(13))

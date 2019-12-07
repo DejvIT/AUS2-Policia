@@ -78,7 +78,7 @@ extension String {
         return 7
     }
     
-    var maxCarVin: Int {
+    var maxCarVIN: Int {
         return 17
     }
     
