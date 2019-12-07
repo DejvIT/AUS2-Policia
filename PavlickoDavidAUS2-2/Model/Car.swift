@@ -10,10 +10,26 @@ import Foundation
 
 class Car: Record {
     
+    private var _id: String
+    private var _idCount: Int
     private var _vin: String
+    private var _vinCount: Int
+    private var _axlesCount: Int
+    private var _weight: Int
+    private var _inSearch: Bool
+    private var _dateEndEC: Date
+    private var _dateEndTC: Date
     
     init() {
+        self._id = ""
+        self._idCount = 0
         self._vin = ""
+        self._vinCount = 0
+        self._axlesCount = 255
+        self._weight = Int.max
+        self._inSearch = false
+        self._dateEndEC = Date()
+        self._dateEndTC = Date()
     }
     
     func initEmpty() -> Any {
@@ -35,7 +51,7 @@ class Car: Record {
     }
 
     func getKeyToString() -> String {
-        return "\(self._vin)"
+        return "[\(self._vin), \(self)"
     }
     
     func toString() -> String {

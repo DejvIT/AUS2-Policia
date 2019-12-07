@@ -12,7 +12,7 @@ import UIKit
 class Generator {
     
     private var _bTreeTest: BTree<Test>!
-    private var _testArray : Array<Int> = Array()
+    private var _testArray : Array<UInt32> = Array()
     
     init(_ order: Int, _ filename: String) {
         self._bTreeTest = BTree<Test>(Test(), Test.comparator, filename, order)
@@ -24,7 +24,7 @@ class Generator {
         }
     }
     
-    var testArray: Array<Int> {
+    var testArray: Array<UInt32> {
         get {
             return self._testArray
         }
@@ -32,7 +32,7 @@ class Generator {
     
     public func insertExact() {
         
-        let array: Array<Int> = [24,40,79,1,78,74,40,29,10,37,30,10,15,52,29,1,63,77,64,15]
+        let array: Array<UInt32> = [24,40,79,1,78,74,40,29,10,37,30,10,15,52,29,1,63,77,64,15]
         
         for item in array {
             
@@ -73,7 +73,7 @@ class Generator {
             let random: Double = Double.random(in: 0...1)
             if (random <= insertRatio) {
                 
-                let randomNumber = Test(Int.random(in: 0 ... maximum))
+                let randomNumber = Test(UInt32(Int.random(in: 0 ... maximum)))
 
                 if (bTreeTest.insert(randomNumber)) {
                     print("\(loop + 1).) 😊 Inserting number \(randomNumber.value).")
@@ -124,7 +124,7 @@ class Generator {
                 }
             }
             
-            let randomNumber = Test(Int.random(in: 0 ... maximum))
+            let randomNumber = Test(UInt32(Int.random(in: 0 ... maximum)))
             print("\(loop + 1).) 😊 Trying to insert number \(randomNumber.value)")
             
             if (bTreeTest.insert(randomNumber)) {
@@ -189,7 +189,7 @@ class Generator {
         
         _ = bTreeTest.fileToString(type: Test())
         let arrayBlocksFromFile = bTreeTest.readArray
-        var readValues: Array<Int> = Array()
+        var readValues: Array<UInt32> = Array()
         
         for block in arrayBlocksFromFile {
             for record in block.records {
@@ -201,21 +201,6 @@ class Generator {
         
         readValues.sort()
         self._testArray.sort()
-        
-//        result += "["
-//        for item in testArray {
-//            result += " \(item) "
-//        }
-//        result += "]\n"
-//
-//        result += "["
-//        for item in readValues {
-//            result += " \(item) "
-//        }
-//        result += "]"
-//
-//        result += "\nCount inserted:   \(testArray.count)\n"
-//        result += "Count after read: \(readValues.count)\n"
         
         if testArray.count == readValues.count {
             result += "\n[\n"

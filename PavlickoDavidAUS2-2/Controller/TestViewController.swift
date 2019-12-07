@@ -16,33 +16,46 @@ class TestViewController: UIViewController {
     }
     
     @IBAction func onTest(_ sender: UIButton) {
-//        testGenerator()
+        testGenerator()
 //        lectureTest()
-        drivingLicenseTest()
+//        drivingLicenseTest()
+//        printIntMaxes()
+    }
+    
+    public func printIntMaxes() {
+        
+        print(Int.max)
+        print(UInt8.max)
+        print(UInt16.max)
+        print(UInt32.max)
+        print(UInt64.max)
+        
     }
     
     public func testGenerator() {
 
-            let generator = Generator(50, "generator")
-            generator.bTree(loop: 1000, insert: 10, search: 0, delete: 0, progressBar: nil)
+            let generator = Generator(5, "generator")
+            generator.bTree(loop: 10000, insert: 10, search: 0, delete: 0, progressBar: nil)
 //            generator.insertExact()
             generator.bTreeSearch()
             print(generator.getResult())
-            print(generator.bTreeTest.fileToString(type: Test()))
+//            print(generator.bTreeTest.fileToString(type: Test()))
     }
     
     public func drivingLicenseTest() {
         
         let bTreeTest: BTree<DrivingLicense>! = BTree<DrivingLicense>(DrivingLicense(), DrivingLicense.comparator, "drivinglicense", 3)
         
-        _ = bTreeTest.insert(DrivingLicense(id: 1, name: "Test", surname: "Adin", dateTime: 2141231, validLicense: true, offenses: 0))
-        _ = bTreeTest.insert(DrivingLicense(id: 2, name: "Test", surname: "Dva", dateTime: 2141231, validLicense: true, offenses: 1))
-        _ = bTreeTest.insert(DrivingLicense(id: 3, name: "Test", surname: "Tri", dateTime: 2141231, validLicense: true, offenses: 2))
-        _ = bTreeTest.insert(DrivingLicense(id: 4, name: "Test", surname: "Cetyre", dateTime: 2141231, validLicense: true, offenses: 3))
-        _ = bTreeTest.insert(DrivingLicense(id: 5, name: "Test", surname: "Piat", dateTime: 2141231, validLicense: true, offenses: 8))
-        _ = bTreeTest.insert(DrivingLicense(id: 6, name: "Test", surname: "Sest", dateTime: 2141231, validLicense: true, offenses: 12))
-        _ = bTreeTest.insert(DrivingLicense(id: 7, name: "Test", surname: "Sedm", dateTime: 2141231, validLicense: true, offenses: 0))
-        _ = bTreeTest.insert(DrivingLicense(id: 8, name: "Test", surname: "Vosm", dateTime: 2141231, validLicense: true, offenses: 6))
+        let date = Date(23, 6, 1996)
+        
+        _ = bTreeTest.insert(DrivingLicense(id: 1, name: "David", surname: "Adin", expiration: date, validLicense: true, offenses: 0))
+        _ = bTreeTest.insert(DrivingLicense(id: 2, name: "Rene", surname: "Dva", expiration: date, validLicense: false, offenses: 1))
+        _ = bTreeTest.insert(DrivingLicense(id: 3, name: "Fero", surname: "Tri", expiration: date, validLicense: true, offenses: 2))
+        _ = bTreeTest.insert(DrivingLicense(id: 4, name: "Ladislav", surname: "Cetyre", expiration: date, validLicense: true, offenses: 3))
+        _ = bTreeTest.insert(DrivingLicense(id: 5, name: "Mrazik", surname: "Piat", expiration: date, validLicense: false, offenses: 8))
+        _ = bTreeTest.insert(DrivingLicense(id: 6, name: "Leonidas", surname: "Sest", expiration: date, validLicense: false, offenses: 12))
+        _ = bTreeTest.insert(DrivingLicense(id: 7, name: "Ondra", surname: "Sedm", expiration: date, validLicense: true, offenses: 0))
+        _ = bTreeTest.insert(DrivingLicense(id: 8, name: "Jany", surname: "Vosm", expiration: date, validLicense: true, offenses: 6))
         
         print(bTreeTest.fileToString(type: DrivingLicense()))
     }
