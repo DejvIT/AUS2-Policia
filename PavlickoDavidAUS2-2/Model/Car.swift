@@ -17,10 +17,10 @@ class Car: Record {
     private var _axlesCount: UInt8
     private var _weight: UInt16
     private var _inSearch: Bool
-    private var _dateEndEC: Date
-    private var _dateEndTC: Date
+    private var _dateEndEC: AppDate
+    private var _dateEndTC: AppDate
     
-    init(id: String, vin: String, axles: UInt8, weight: UInt16, inSearch: Bool, endEC: Date, endTC: Date) {
+    init(id: String, vin: String, axles: UInt8, weight: UInt16, inSearch: Bool, endEC: AppDate, endTC: AppDate) {
         self._id = id
         self._idCount = UInt8(id.count > id.maxCarID ? id.maxCarID : id.count)
         self._vin = vin
@@ -40,8 +40,8 @@ class Car: Record {
         self._axlesCount = UInt8.max
         self._weight = UInt16.max
         self._inSearch = false
-        self._dateEndEC = Date()
-        self._dateEndTC = Date()
+        self._dateEndEC = AppDate()
+        self._dateEndTC = AppDate()
     }
     
     var id: String {
@@ -86,13 +86,13 @@ class Car: Record {
         }
     }
     
-    var dateEndEC: Date {
+    var dateEndEC: AppDate {
         get {
             return self._dateEndEC
         }
     }
     
-    var dateEndTC: Date {
+    var dateEndTC: AppDate {
         get {
             return self._dateEndTC
         }
@@ -186,13 +186,13 @@ class Car: Record {
         for j in 1...dateEndEC.getSize() {
             dateBytes.append(bytes[j - 1 + idCount.size + carID.maxCarID + vinCount.size + carVIN.maxCarVIN + axlesCount.size + weight.size + inSearch.size])
         }
-        let endEC = Date().fromBytes(bytes: dateBytes) as! Date
+        let endEC = AppDate().fromBytes(bytes: dateBytes) as! AppDate
         
         dateBytes = []
         for j in 1...dateEndTC.getSize() {
             dateBytes.append(bytes[j - 1 + idCount.size + carID.maxCarID + vinCount.size + carVIN.maxCarVIN + axlesCount.size + weight.size + inSearch.size + endEC.getSize()])
         }
-        let endTC = Date().fromBytes(bytes: dateBytes) as! Date
+        let endTC = AppDate().fromBytes(bytes: dateBytes) as! AppDate
         
         return Car(id: carID, vin: carVIN, axles: axlesCount, weight: weight, inSearch: inSearch, endEC: endEC, endTC: endTC)
     }
@@ -202,7 +202,7 @@ class Car: Record {
     }
     
     func toString() -> String {
-        return "\(id)"
+        return "ID: \(id), VIN: \(vin), Počet náprav: \(axlesCount), Hmotnosť: \(weight), Hľadané: \(inSearch), Koniec emisnej kontroly: \(dateEndEC.toString()), Koniec technickej kontroly: \(dateEndTC.toString())"
     }
     
     func isEmpty() -> Bool {
@@ -211,6 +211,17 @@ class Car: Record {
         }
         
         return false
+    }
+    
+    func initRandom() -> Any {
+        
+        let randomSizeID = Int.random(in: 1...id.maxCarID)
+        let randomSizeVIN = Int.random(in: 1...vin.maxCarVIN)
+        let randomWeight = UInt16.random(in: 700...2250)
+        let randomDateEC = AppDate().initRandom() as! AppDate
+        let randomDateTC = AppDate().initRandom() as! AppDate
+        
+        return Car(id: randomSizeID.randomString, vin: randomSizeVIN.randomString, axles: 4, weight: randomWeight, inSearch: false, endEC: randomDateEC, endTC: randomDateTC) as Any
     }
     
     static let comparator: Comparator = {

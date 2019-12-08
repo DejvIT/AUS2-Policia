@@ -119,6 +119,10 @@ class CarVIN: Record {
         return false
     }
     
+    func initRandom() -> Any {
+        return -1
+    }
+    
     static let comparator: Comparator = {
         lhs, rhs in guard let first = lhs as? CarVIN, let second = rhs as? CarVIN else {
             return ComparisonResult.orderedSame

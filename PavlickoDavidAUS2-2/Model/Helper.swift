@@ -30,6 +30,11 @@ extension Int {
     var size: Int {
         return 8
     }
+    
+    var randomString: String {
+          let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+          return String((0..<self).map{ _ in letters.randomElement()! })
+    }
 }
 
 extension UInt8 {
@@ -73,6 +78,11 @@ extension UInt64 {
     
     var toBytes: [UInt8] {
         return Helper.shared.decimalStringToUInt8Array(String(self), 8)
+    }
+    
+    var randomID: UInt64 {
+        let numbers = "0123456789"
+        return UInt64(String((0..<self).map{ _ in numbers.randomElement()! }))!
     }
 }
 

@@ -144,9 +144,9 @@ final class HeapFile<T: Record> {
     }
 }
 
-//MARK: - Write
 extension HeapFile {
-    
+
+    //MARK: - Write
     public func write(_ block: HBlock<T>) {
         _fileHandle?.seek(toFileOffset: block.address)
         _fileHandle?.write(Data(block.toBytes()))
@@ -163,6 +163,19 @@ extension HeapFile {
         }
         let data: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
         return HBlock(type: type, bytes: data, size: block.size, address: address)
+    }
+    
+    //MARK: - Get Record from file
+    public func getRecord(_ item: T, _ address: UInt64) -> T {
+        
+        let length = item.getSize()
+        do {
+            try fileHandle.seek(toOffset: address)
+        } catch {
+            print(error)
+        }
+        let data: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        return item.fromBytes(bytes: data) as! T
     }
 }
 

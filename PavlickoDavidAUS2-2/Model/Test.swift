@@ -74,4 +74,8 @@ public class Test: Record {
         return Test() as Any
     }
     
+    func initRandom() -> Any {
+        return Test(UInt32.random(in: 1...UInt32.max/2))
+    }
+    
 }

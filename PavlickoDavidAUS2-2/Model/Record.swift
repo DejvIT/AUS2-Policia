@@ -22,4 +22,6 @@ protocol Record {
     
     func isEmpty() -> Bool
     
+    func initRandom() -> Any
+    
 }

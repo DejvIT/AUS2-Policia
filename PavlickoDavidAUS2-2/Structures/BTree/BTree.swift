@@ -446,9 +446,59 @@ extension BTree {
             let readBlock = getBlock(type: type, address: UInt64(address), blockSize: order - 1)
             
             //Checking
-            self._readArray.append(readBlock)
+//            self._readArray.append(readBlock)
             
             result += readBlock.toString()
+            address += length
+        }
+        
+        return result
+    }
+    
+    public func fileToRecords(type: T) -> Array<T> {
+        
+        var result: Array<T> = Array<T>()
+        
+        let length = type.getSize() * (blockSize) + (order * 8)
+        do {
+            try fileHandle.seek(toOffset: 0)
+        } catch {
+            print(error)
+        }
+        
+        let metaBlock: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        var object: [UInt8] = []
+        var j = 0
+        while j < 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        _ = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        object = []
+        while j < 2 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        _ = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        object = []
+        while j < 3 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let lastBlockAddress = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        var address = length
+        while UInt64(address) < UInt64(lastBlockAddress)! {
+            let readBlock = getBlock(type: type, address: UInt64(address), blockSize: order - 1)
+            
+            for i in 1...readBlock.validRecords {
+                result.append(readBlock.records[i - 1])
+            }
             address += length
         }
         

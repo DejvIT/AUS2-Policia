@@ -15,11 +15,11 @@ class DrivingLicense: Record {
     private var _nameCount: UInt8
     private var _surname: String
     private var _surnameCount: UInt8
-    private var _expiration: Date
+    private var _expiration: AppDate
     private var _validLicense: Bool
     private var _trafficOffenses: UInt8
     
-    init(id: UInt64, name: String, surname: String, expiration: Date, validLicense: Bool, offenses: Int) {
+    init(id: UInt64, name: String, surname: String, expiration: AppDate, validLicense: Bool, offenses: Int) {
         self._id = id
         self._name = name
         self._nameCount = UInt8(name.count > name.maxSurname ? name.maxName : name.count)
@@ -36,7 +36,7 @@ class DrivingLicense: Record {
         self._nameCount = 0
         self._surname = ""
         self._surnameCount = 0
-        self._expiration = Date()
+        self._expiration = AppDate()
         self._validLicense = false
         self._trafficOffenses = 255
     }
@@ -63,7 +63,7 @@ class DrivingLicense: Record {
         return self._surnameCount
     }
     
-    var expiration: Date {
+    var expiration: AppDate {
         return self._expiration
     }
     
@@ -156,7 +156,7 @@ class DrivingLicense: Record {
         for j in 1...expiration.getSize() {
             dateBytes.append(bytes[j - 1 + id.size + nameCount.size + surnameCount.size + name.maxName + surname.maxSurname])
         }
-        let date = Date().fromBytes(bytes: dateBytes) as! Date
+        let date = AppDate().fromBytes(bytes: dateBytes) as! AppDate
         
         let validLicense = Int(bytes[id.size + nameCount.size + surnameCount.size + name.maxName + surname.maxSurname + date.getSize()]).boolValue
         let offenses = Int(bytes[id.size + nameCount.size + surnameCount.size + name.maxName + surname.maxSurname + date.getSize() + validLicense.size])
@@ -179,6 +179,18 @@ class DrivingLicense: Record {
         }
         
         return false
+    }
+    
+    func initRandom() -> Any {
+        let randomSizeName = Int.random(in: 3...10)
+        let randomSizeSurname = Int.random(in: 5...15)
+        let randomExpiration = AppDate().initRandom() as! AppDate
+        
+        let validLicense = randomExpiration.isValid()
+        
+        let randomOffenses = Int.random(in: 0...23)
+        
+        return DrivingLicense(id: UInt64(11).randomID, name: randomSizeName.randomString, surname: randomSizeSurname.randomString, expiration: randomExpiration, validLicense: validLicense, offenses: randomOffenses) as Any
     }
     
     static let comparator: Comparator = {

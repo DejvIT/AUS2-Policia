@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-public class Date: Record {
+public class AppDate: Record {
     
     var _day: UInt8
     var _month: UInt8
@@ -90,11 +91,11 @@ public class Date: Record {
         }
         let year = UInt16(Helper.shared.uInt8ArrayToDecimalString(idBytes))
         
-        return Date(day, month, year!) as Any
+        return AppDate(day, month, year!) as Any
     }
     
     func initEmpty() -> Any {
-        return Date() as Any
+        return AppDate() as Any
     }
     
     func toString() -> String {
@@ -108,7 +109,32 @@ public class Date: Record {
         return false
     }
     
+    func initRandom() -> Any {
+        let randomDay = UInt8.random(in: 1...30)
+        let randomMonth = UInt8.random(in: 1...12)
+        let randomYear = UInt16.random(in: 1970...2050)
+        
+        return AppDate(randomDay, randomMonth, randomYear) as Any
+    }
     
-    
-    
+    func isValid() -> Bool {
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day,.month,.year], from: Date())
+        if let day = components.day, let month = components.month, let year = components.year {
+            if (self._year > year) {
+                return true
+            }
+            
+            if (self._month > month && self.year >= year) {
+                return true
+            }
+            
+            if (self._day >= day && self._month >= month && self.year >= year) {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
