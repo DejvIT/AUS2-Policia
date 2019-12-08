@@ -38,7 +38,7 @@ final class BTree<T: Record> {
         self._order = order
 
         self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
-        print("Filepath: \(pathURL)\n")
+        print("Filepath [BTree]: \(pathURL)\n")
         
         if (!_fileManager.fileExists(atPath: pathURL)) {
             _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
@@ -50,7 +50,7 @@ final class BTree<T: Record> {
         self._nextBlock = 2 * UInt64(block.getBlockByteSize())
         write(block)
         writeMetaBlock(block.getBlockByteSize())
-        print("Block size set to: \(block.getBlockByteSize()) bytes.\n")
+        print("Block size of BTree set to: \(block.getBlockByteSize()) bytes.\n")
     }
     
     func writeMetaBlock(_ size: Int) {

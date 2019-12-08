@@ -26,6 +26,10 @@ extension Int {
     var boolValue: Bool {
         return self == 1 ? true : false
     }
+    
+    var size: Int {
+        return 8
+    }
 }
 
 extension UInt8 {

@@ -10,11 +10,10 @@ import UIKit
 
 class TestViewController: UIViewController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     @IBAction func onTest(_ sender: UIButton) {
 //        testGenerator()
 //        lectureTest()
@@ -22,7 +21,8 @@ class TestViewController: UIViewController {
 //        printIntMaxes()
 //        carTest()
 //        carIDTest()
-        carVINTest()
+//        carVINTest()
+        testHeapFile()
     }
     
     public func printIntMaxes() {
@@ -33,6 +33,32 @@ class TestViewController: UIViewController {
         print(UInt32.max)
         print(UInt64.max)
         
+    }
+    
+    public func testHeapFile() {
+
+        let heapFileTest: HeapFile<Car>! = HeapFile<Car>(Car(), "heap_cars", 4)
+        let date = Date(23, 6, 1996)
+        
+        var addresses: Array<UInt64> = Array()
+        
+        addresses.append(heapFileTest.insert(Car(id: "1", vin: "VIN", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "5", vin: "VIN 2", axles: 2, weight: 950, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "13", vin: "VIN 3", axles: 3, weight: 1500, inSearch: true, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "11", vin: "VINko", axles: 2, weight: 1200, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "0", vin: "VINlofas", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "8", vin: "VINmrdko", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "9", vin: "VIN aa", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "A", vin: "VINsa", axles: 4, weight: 850, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "c", vin: "ds", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "G", vin: "sadfc", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "L", vin: "fdsfdoi", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "X", vin: "3r4fr", axles: 4, weight: 777, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "9", vin: "4r3fef", axles: 4, weight: 1500, inSearch: true, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "3", vin: "34ffdsd", axles: 2, weight: 1500, inSearch: false, endEC: date, endTC: date)))
+        addresses.append(heapFileTest.insert(Car(id: "P", vin: "43fd", axles: 4, weight: 1437, inSearch: false, endEC: date, endTC: date)))
+        
+        print(heapFileTest.fileToString(type: Car()))
     }
     
     public func testGenerator() {
@@ -81,7 +107,7 @@ class TestViewController: UIViewController {
     
     public func carTest() {
         
-        let bTreeTest: BTree<Car>! = BTree<Car>(Car(), Car.comparator, "cars", 3)
+        let bTreeTest: BTree<Car>! = BTree<Car>(Car(), Car.comparator, "test_cars", 3)
         let date = Date(23, 6, 1996)
         
         _ = bTreeTest.insert(Car(id: "1", vin: "VIN", axles: 4, weight: 1500, inSearch: false, endEC: date, endTC: date))

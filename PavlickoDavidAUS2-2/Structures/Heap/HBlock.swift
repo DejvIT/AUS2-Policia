@@ -11,13 +11,13 @@ import Foundation
 class HBlock<T: Record> {
     
     private var _address: UInt64
-    private var _size: Int
+    private var _size: UInt16
     private var _records: [T] = []
     private var _validRecords: Int = 0
     private let _type: T
     private let _nextFreeBlock: UInt64 = UInt64.max
     
-    init(_ object: T, _ size: Int, _ address: UInt64) {
+    init(_ object: T, _ size: UInt16, _ address: UInt64) {
         self._type = object
         self._address = address
         self._size = size
@@ -29,7 +29,7 @@ class HBlock<T: Record> {
         }
     }
     
-    init(type: T, bytes: [UInt8], size: Int, address: UInt64) {
+    init(type: T, bytes: [UInt8], size: UInt16, address: UInt64) {
         self._type = type
         self._size = size
         self._address = address
@@ -60,7 +60,7 @@ class HBlock<T: Record> {
         }
     }
     
-    var size: Int {
+    var size: UInt16 {
         get {
             return self._size
         }
@@ -91,10 +91,10 @@ class HBlock<T: Record> {
     }
     
     func getBlockByteSize() -> Int {
-        return self.type.getSize() * self.size
+        return self.type.getSize() * Int(self.size)
     }
     
-    func insert(_ record: T) -> Bool {
+    func insert(_ record: T) -> UInt64 {
         
         for i in 0..._records.count - 1 {
             
@@ -102,11 +102,11 @@ class HBlock<T: Record> {
 
                 self._records[i] = record
                 self._validRecords += 1
-                return true
+                return address + UInt64(i * type.getSize())
             }
         }
         
-        return false
+        return UInt64.max
     }
     
     func toBytes() -> [UInt8] {
