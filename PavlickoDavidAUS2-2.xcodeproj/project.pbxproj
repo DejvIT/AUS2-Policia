@@ -12,11 +12,14 @@
 		323E90EE23955CD8008B44E1 /* HeapFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323E90ED23955CD8008B44E1 /* HeapFile.swift */; };
 		325CAC02238936BA003789A5 /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC01238936BA003789A5 /* BTree.swift */; };
 		325CAC06238948D5003789A5 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325CAC05238948D5003789A5 /* Test.swift */; };
+		326EA046239DBD2D00193B37 /* ShowCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EA045239DBD2D00193B37 /* ShowCarViewController.swift */; };
+		326EA048239DBD4000193B37 /* CreateCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EA047239DBD4000193B37 /* CreateCarViewController.swift */; };
+		326EA04A239DBD5300193B37 /* SearchCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 326EA049239DBD5300193B37 /* SearchCarViewController.swift */; };
 		3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB992396DBE600B2D873 /* DrivingLicense.swift */; };
 		3271BB9C2396EA2500B2D873 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3271BB9B2396EA2500B2D873 /* Helper.swift */; };
 		32765021239C06F800D66BFB /* AppDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765020239C06F800D66BFB /* AppDate.swift */; };
 		32765023239C3D0800D66BFB /* CarID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765022239C3D0800D66BFB /* CarID.swift */; };
-		32765025239C3D1500D66BFB /* CarVin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765024239C3D1500D66BFB /* CarVin.swift */; };
+		32765025239C3D1500D66BFB /* CarVIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32765024239C3D1500D66BFB /* CarVIN.swift */; };
 		327F63302392FB3A00E4D177 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327F632F2392FB3A00E4D177 /* Generator.swift */; };
 		32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464223800D2D009A98E2 /* AppDelegate.swift */; };
 		32C4464523800D2D009A98E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4464423800D2D009A98E2 /* SceneDelegate.swift */; };
@@ -44,11 +47,14 @@
 		323E90ED23955CD8008B44E1 /* HeapFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeapFile.swift; sourceTree = "<group>"; };
 		325CAC01238936BA003789A5 /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
 		325CAC05238948D5003789A5 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		326EA045239DBD2D00193B37 /* ShowCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCarViewController.swift; sourceTree = "<group>"; };
+		326EA047239DBD4000193B37 /* CreateCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCarViewController.swift; sourceTree = "<group>"; };
+		326EA049239DBD5300193B37 /* SearchCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCarViewController.swift; sourceTree = "<group>"; };
 		3271BB992396DBE600B2D873 /* DrivingLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingLicense.swift; sourceTree = "<group>"; };
 		3271BB9B2396EA2500B2D873 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		32765020239C06F800D66BFB /* AppDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDate.swift; sourceTree = "<group>"; };
 		32765022239C3D0800D66BFB /* CarID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarID.swift; sourceTree = "<group>"; };
-		32765024239C3D1500D66BFB /* CarVin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarVin.swift; sourceTree = "<group>"; };
+		32765024239C3D1500D66BFB /* CarVIN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarVIN.swift; sourceTree = "<group>"; };
 		327F632F2392FB3A00E4D177 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		32C4463F23800D2D009A98E2 /* FRI Police.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FRI Police.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4464223800D2D009A98E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,7 +145,7 @@
 				3271BB992396DBE600B2D873 /* DrivingLicense.swift */,
 				322E6C662395C7FC00F58D84 /* Car.swift */,
 				32765022239C3D0800D66BFB /* CarID.swift */,
-				32765024239C3D1500D66BFB /* CarVin.swift */,
+				32765024239C3D1500D66BFB /* CarVIN.swift */,
 				32765020239C06F800D66BFB /* AppDate.swift */,
 				325CAC05238948D5003789A5 /* Test.swift */,
 				327F632F2392FB3A00E4D177 /* Generator.swift */,
@@ -193,6 +199,9 @@
 			isa = PBXGroup;
 			children = (
 				32CFA98B239D36440060975E /* CarViewController.swift */,
+				326EA045239DBD2D00193B37 /* ShowCarViewController.swift */,
+				326EA047239DBD4000193B37 /* CreateCarViewController.swift */,
+				326EA049239DBD5300193B37 /* SearchCarViewController.swift */,
 			);
 			path = Cars;
 			sourceTree = "<group>";
@@ -283,6 +292,7 @@
 				32CFA98C239D36440060975E /* CarViewController.swift in Sources */,
 				322E6C672395C7FC00F58D84 /* Car.swift in Sources */,
 				32C44667238092E4009A98E2 /* Block.swift in Sources */,
+				326EA04A239DBD5300193B37 /* SearchCarViewController.swift in Sources */,
 				32CFA9A3239D9BF10060975E /* CreateDLicenseViewController.swift in Sources */,
 				32CFA9A1239D849C0060975E /* ShowDLicenseViewController.swift in Sources */,
 				3271BB9C2396EA2500B2D873 /* Helper.swift in Sources */,
@@ -297,10 +307,12 @@
 				32CFA999239D58990060975E /* Spinner.swift in Sources */,
 				3271BB9A2396DBE600B2D873 /* DrivingLicense.swift in Sources */,
 				32CFA9A5239DA9DF0060975E /* SearchDLicenseViewController.swift in Sources */,
-				32765025239C3D1500D66BFB /* CarVin.swift in Sources */,
+				32765025239C3D1500D66BFB /* CarVIN.swift in Sources */,
 				32CFA997239D41570060975E /* PoliceApp.swift in Sources */,
 				32765021239C06F800D66BFB /* AppDate.swift in Sources */,
+				326EA048239DBD4000193B37 /* CreateCarViewController.swift in Sources */,
 				32CFA995239D3A710060975E /* SettingViewController.swift in Sources */,
+				326EA046239DBD2D00193B37 /* ShowCarViewController.swift in Sources */,
 				32CFA98E239D36760060975E /* DLicenseViewController.swift in Sources */,
 				32C4464323800D2D009A98E2 /* AppDelegate.swift in Sources */,
 				32C4466923809C78009A98E2 /* Record.swift in Sources */,

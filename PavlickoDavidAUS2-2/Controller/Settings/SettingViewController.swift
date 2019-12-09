@@ -42,6 +42,7 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.sizeToFit()
     }
 
     @IBAction func onHeapFileSet(_ sender: UIButton) {
@@ -134,10 +135,10 @@ class SettingViewController: UIViewController {
     
     @IBAction func onGenerateTap(_ sender: UIButton) {
         
-        if (countCarsField.text != "" && countDLsField.text != "") {
+        if (countCarsField.text != "" || countDLsField.text != "") {
             
-            let countCars = Int(countCarsField.text!)!
-            let countDLs = Int(countDLsField.text!)!
+            let countCars = Int(countCarsField.text ?? "0") ?? 0
+            let countDLs = Int(countDLsField.text ?? "0") ?? 0
             
             let loadingSpinner = Spinner.customBackground(onView: self.view)
             DispatchQueue.global(qos: .background).async {

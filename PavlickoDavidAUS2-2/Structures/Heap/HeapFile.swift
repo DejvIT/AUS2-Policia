@@ -240,4 +240,56 @@ extension HeapFile {
         
         return result
     }
+    
+    public func fileToRecords(type: T) -> Array<T> {
+        
+        var result: Array<T> = Array<T>()
+        
+        let length = type.getSize() * Int(blockSize)
+        do {
+            try fileHandle.seek(toOffset: 0)
+        } catch {
+            print(error)
+        }
+        
+        let metaBlock: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        var object: [UInt8] = []
+        var j = 0
+        while j < 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        _ = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        object = []
+        while j < 2 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let nextBlock = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        object = []
+        while j < 2 * 8 + 2 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let blockSize = Helper.shared.uInt8ArrayToDecimalString(object)
+        
+        var address = length
+        while UInt64(address) < UInt64(nextBlock)! {
+            let readBlock = getBlock(type: type, address: UInt64(address), blockSize: UInt16(blockSize)!)
+            
+            if (readBlock.validRecords > 1) {
+                for i in 1...readBlock.validRecords {
+                    result.append(readBlock.records[i - 1])
+                }
+            }
+            address += length
+        }
+        
+        return result
+    }
 }

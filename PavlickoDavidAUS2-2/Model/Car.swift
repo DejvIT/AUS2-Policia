@@ -221,7 +221,13 @@ class Car: Record {
         let randomDateEC = AppDate().initRandom() as! AppDate
         let randomDateTC = AppDate().initRandom() as! AppDate
         
-        return Car(id: randomSizeID.randomString, vin: randomSizeVIN.randomString, axles: 4, weight: randomWeight, inSearch: false, endEC: randomDateEC, endTC: randomDateTC) as Any
+        let randomNumber: Float = Float.random(in: 0...1)
+        var inSearch = false
+        if randomNumber <= 0.5 {
+            inSearch = true
+        }
+        
+        return Car(id: randomSizeID.randomString, vin: randomSizeVIN.randomString, axles: 4, weight: randomWeight, inSearch: inSearch, endEC: randomDateEC, endTC: randomDateTC) as Any
     }
     
     static let comparator: Comparator = {

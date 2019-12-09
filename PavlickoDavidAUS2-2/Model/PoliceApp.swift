@@ -18,6 +18,7 @@ public class PoliceApp {
     private var _bTreeDrivingLicense: BTree<DrivingLicense>?
     
     private var _drivingLIcenses: Array<DrivingLicense>?
+    private var _cars: Array<Car>?
     
     var heapFile: HeapFile<Car>? {
         get {
@@ -49,6 +50,12 @@ public class PoliceApp {
         }
     }
     
+    var cars: Array<Car>? {
+        get {
+            return self._cars
+        }
+    }
+    
     public func setHeapFile(_ filename: String, _ blockSize: UInt16) {
         self._heapFile = HeapFile<Car>(Car(), filename, blockSize)
     }
@@ -72,9 +79,11 @@ public class PoliceApp {
             var carsQuantityNeeded = countCars
             while carsQuantityNeeded > 0 {
                 let generatedCar = Car().initRandom() as! Car
-                let tempAddress = self._heapFile?.insert(generatedCar)
-                if (self._bTreeVIN!.insert(CarVIN(tempAddress, generatedCar.vin)) && self._bTreeID!.insert(CarID(tempAddress, generatedCar.id))) {
-                    carsQuantityNeeded -= 1
+                if (self.bTreeID!.search(CarID(nil, generatedCar.id)) == nil && self.bTreeVIN!.search(CarVIN(nil, generatedCar.vin)) == nil) {
+                    let tempAddress = self._heapFile?.insert(generatedCar)
+                    if (self._bTreeVIN!.insert(CarVIN(tempAddress, generatedCar.vin)) && self._bTreeID!.insert(CarID(tempAddress, generatedCar.id))) {
+                        carsQuantityNeeded -= 1
+                    }
                 }
             }
         }
@@ -122,5 +131,24 @@ public class PoliceApp {
     
     public func drivingLicensesCount() -> Int {
         return drivingLicenses?.count ?? 0
+    }
+    
+    public func readCars() {
+        self._cars = heapFile!.fileToRecords(type: Car())
+    }
+    
+    public func carsCount() -> Int {
+        return cars?.count ?? 0
+    }
+    
+    func insertCar(_ car: Car) -> Bool {
+        if (self.bTreeID!.search(CarID(nil, car.id)) == nil && self.bTreeVIN!.search(CarVIN(nil, car.vin)) == nil) {
+            let tempAddress = self._heapFile?.insert(car)
+            _ = self._bTreeVIN!.insert(CarVIN(tempAddress, car.vin))
+            _ = self._bTreeID!.insert(CarID(tempAddress, car.id))
+            return true
+        }
+        
+        return false
     }
 }

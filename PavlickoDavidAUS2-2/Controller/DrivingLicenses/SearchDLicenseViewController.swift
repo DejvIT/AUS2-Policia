@@ -43,9 +43,10 @@ class SearchDLicenseViewController: UIViewController {
                 notFoundLabel.isHidden = false
                 licenseView.isHidden = true
             } else {
-                nameLabel.text = "\(drivingLicense!.name) \(drivingLicense!.surname)"
-                idLabel.text = "\(drivingLicense!.id)"
-                validLabel.text = drivingLicense!.expiration.toString()
+
+                nameLabel.text = "Meno: \(drivingLicense!.name) \(drivingLicense!.surname)"
+                idLabel.text = "ID: \(drivingLicense!.id)"
+                validLabel.text = "Dátum platnosti: \(drivingLicense!.expiration.toString())"
                 
                 if (drivingLicense!.expiration.isValid()) {
                     validLabel.textColor = UIColor.green
@@ -53,7 +54,7 @@ class SearchDLicenseViewController: UIViewController {
                     validLabel.textColor = UIColor.red
                 }
                 
-                offensesLabel.text = "\(drivingLicense!.trafficOffenses)"
+                offensesLabel.text = "Počet priestupkov: \(drivingLicense!.trafficOffenses)"
                 
                 licenseView.isHidden = false
                 notFoundLabel.isHidden = true
