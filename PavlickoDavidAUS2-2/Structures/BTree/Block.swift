@@ -221,5 +221,9 @@ class Block<T: Record> {
         
         return result
     }
+    
+    func updateRecord(_ item: T, at: Int) {
+        self._records[at] = item
+    }
 }
 

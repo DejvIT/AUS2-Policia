@@ -79,6 +79,31 @@ class DrivingLicense: Record {
         return DrivingLicense() as Any
     }
     
+    public func setName(_ name: String) {
+        self._name = name
+        self._nameCount = UInt8(name.count > name.maxSurname ? name.maxName : name.count)
+    }
+    
+    public func setSurname(_ surname: String) {
+        self._surname = surname
+        self._surnameCount = UInt8(surname.count > surname.maxSurname ? surname.maxSurname : surname.count)
+    }
+    
+    public func setTrafficOffenses(_ amount: UInt8) {
+        self._trafficOffenses = amount
+    }
+    
+    public func setExpiration(_ date: AppDate) {
+        
+        if (date.isValid()) {
+            self._validLicense = true
+        } else {
+            self._validLicense = false
+        }
+        
+        self._expiration = date
+    }
+    
     //MARK: - To Bytes
     func toBytes() -> [UInt8] {
         

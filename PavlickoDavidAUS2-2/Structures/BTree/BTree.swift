@@ -358,6 +358,50 @@ final class BTree<T: Record> {
         }
     }
     
+    public func searchBlock(_ item: T) -> Block<T>? {
+        
+        var block = getBlock(type: item, address: root, blockSize: blockSize)
+        
+        if (block.validRecords == 0) {
+            return nil
+        }
+        
+        while true {
+            
+            var newPivot = false
+    
+            for i in 0...block.records.count - 1 {
+                
+                if (newPivot) {
+                    break
+                }
+        
+                switch (comparator(item, block.records[i])) {
+                case .orderedSame:
+                    return block
+                case .orderedAscending:
+                    if (block.getLeft(i) == UInt64.max) {
+                        return nil
+                    } else {
+                        block = getBlock(type: item, address: block.getLeft(i), blockSize: block.size)
+                        newPivot = true
+                        break
+                    }
+                case .orderedDescending:
+                    if ((block.getRight(i) == UInt64.max) && (i == block.records.count - 1)) {
+                        return nil
+                    } else if (block.getRight(i) != UInt64.max && (i == block.records.count - 1)) {
+                        block = getBlock(type: item, address: block.getRight(i), blockSize: block.size)
+                        newPivot = true
+                        break
+                    }
+                default:
+                    return nil
+                }
+            }
+        }
+    }
+    
     //MARK: - Delete
     public func delete(_ item: T) -> Bool {
         
@@ -496,8 +540,10 @@ extension BTree {
         while UInt64(address) < UInt64(lastBlockAddress)! {
             let readBlock = getBlock(type: type, address: UInt64(address), blockSize: order - 1)
             
-            for i in 1...readBlock.validRecords {
-                result.append(readBlock.records[i - 1])
+            if (readBlock.validRecords > 0) {
+                for i in 1...readBlock.validRecords {
+                    result.append(readBlock.records[i - 1])
+                }
             }
             address += length
         }

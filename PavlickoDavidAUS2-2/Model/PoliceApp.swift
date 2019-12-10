@@ -151,4 +151,14 @@ public class PoliceApp {
         
         return false
     }
+    
+    func updateDrivingLicense(_ drivingLicense: DrivingLicense) {
+        let block = bTreeDrivingLicense?.searchBlock(drivingLicense)
+        for i in 0...block!.validRecords - 1 {
+            if (block!.records[i].id == drivingLicense.id) {
+                block!.updateRecord(drivingLicense, at: i)
+                bTreeDrivingLicense?.write(block!)
+            }
+        }
+    }
 }
