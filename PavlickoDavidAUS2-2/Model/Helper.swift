@@ -42,10 +42,6 @@ extension UInt8 {
     var size: Int {
         return 1
     }
-    
-    var toBytes: [UInt8] {
-        return Helper.shared.decimalStringToUInt8Array(String(self), 1)
-    }
 }
 
 extension UInt16 {
@@ -101,6 +97,10 @@ extension String {
     }
     
     var maxSurname: Int {
+        return 35
+    }
+    
+    var maxFileName: Int {
         return 35
     }
 }

@@ -12,7 +12,8 @@ import UIKit
 final class BTree<T: Record> {
     
     private let comparator: Comparator
-    fileprivate var filename: String
+    private var _filename: String
+    private var _filenameCount: UInt8
     fileprivate var pathURL: String
     fileprivate var _fileManager: FileManager = FileManager.default
     fileprivate var _fileHandle: FileHandle?
@@ -21,12 +22,12 @@ final class BTree<T: Record> {
     private var _root: UInt64
     private var _firstFreeBlock: UInt64 = UInt64.max
     private var _nextBlock: UInt64
-    private var _order: Int
+    private var _order: UInt64
     
     //Test array
     private var _readArray: Array<Block<T>> = Array()
     
-    public init(_ type: T, _ comparator: @escaping Comparator, _ filename: String, _ order: Int) {
+    public init(_ type: T, _ comparator: @escaping Comparator, _ filename: String, _ order: UInt64) {
         
         var order = order
         if (order < 3) {
@@ -34,23 +35,31 @@ final class BTree<T: Record> {
         }
         
         self.comparator = comparator
-        self.filename = filename
+        self._filename = filename
+        self._filenameCount = UInt8(filename.count > filename.maxFileName ? filename.maxFileName : filename.count)
         self._order = order
 
         self.pathURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/" + filename + ".bin"
         print("Filepath [BTree]: \(pathURL)\n")
         
+        var fileExisted = true
         if (!_fileManager.fileExists(atPath: pathURL)) {
             _fileManager.createFile(atPath: pathURL, contents: nil, attributes: nil)
+            fileExisted = false
         }
         _fileHandle = FileHandle(forUpdatingAtPath: pathURL)
         
-        self._root = UInt64(type.getSize() * (order - 1) + (order * 8))
-        let block = Block<T>(type, order - 1, self._root)
+        self._root = UInt64((type.getSize() * Int(order - 1)) + Int(order * 8))
+        let block = Block<T>(type, UInt64(order - 1), self._root)
         self._nextBlock = 2 * UInt64(block.getBlockByteSize())
-        write(block)
-        writeMetaBlock(block.getBlockByteSize())
-        print("Block size of BTree set to: \(block.getBlockByteSize()) bytes.\n")
+        
+        if (fileExisted) {
+            readMetaData(type)
+        } else {
+            write(block)
+            writeMetaBlock(block.getBlockByteSize())
+            print("Block size of BTree set to: \(block.getBlockByteSize()) bytes.\n")
+        }
     }
     
     func writeMetaBlock(_ size: Int) {
@@ -61,7 +70,7 @@ final class BTree<T: Record> {
             result.append(temp)
         }
         
-        tempBytes = Helper.shared.decimalStringToUInt8Array(String(self._firstFreeBlock), self._firstFreeBlock.size)
+        tempBytes = Helper.shared.decimalStringToUInt8Array(String(self._order), self._order.size)
         for temp in tempBytes {
             result.append(temp)
         }
@@ -115,15 +124,27 @@ final class BTree<T: Record> {
         }
     }
     
-    var order: Int {
+    var order: UInt64 {
         get {
             return self._order
         }
     }
     
-    var blockSize: Int {
+    var blockSize: UInt64 {
         get {
             return self._order - 1
+        }
+    }
+    
+    var filename: String {
+        get {
+            return self._filename
+        }
+    }
+    
+    var filenameCount: UInt8 {
+        get {
+            return self._filenameCount
         }
     }
     
@@ -418,7 +439,7 @@ extension BTree {
         _fileHandle?.write(Data(block.toBytes()))
     }
     
-    public func getBlock(type: T, address: UInt64, blockSize: Int) -> Block<T> {
+    public func getBlock(type: T, address: UInt64, blockSize: UInt64) -> Block<T> {
         
         let block = Block<T>(type.initEmpty() as! T, blockSize, address)
         let length = block.getBlockByteSize()
@@ -429,6 +450,45 @@ extension BTree {
         }
         let data: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
         return Block(type: type, bytes: data, size: block.size, address: address)
+    }
+    
+    func readMetaData(_ type: T) {
+        
+        let length = type.getSize() * Int(blockSize) + (Int(order) * 8)
+        do {
+            try fileHandle.seek(toOffset: 0)
+        } catch {
+            print(error)
+        }
+        
+        let metaBlock: [UInt8] = [UInt8]((_fileHandle?.readData(ofLength: length))!)
+        var object: [UInt8] = []
+        var j = 0
+        while j < 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let rootAddress = Helper.shared.uInt8ArrayToDecimalString(object)
+        self._root = UInt64(rootAddress)!
+        
+        object = []
+        while j < 2 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let order = UInt64(Helper.shared.uInt8ArrayToDecimalString(object))!
+        self._order = order
+        
+        object = []
+        while j < 3 * 8 {
+            object.append(metaBlock[j])
+            j += 1
+        }
+        
+        let nextBlock = Helper.shared.uInt8ArrayToDecimalString(object)
+        self._nextBlock = UInt64(nextBlock)!
     }
 }
 
@@ -445,7 +505,7 @@ extension BTree {
         
         var result: String = ""
         
-        let length = type.getSize() * (blockSize) + (order * 8)
+        let length = type.getSize() * Int(blockSize) + (Int(order) * 8)
         do {
             try fileHandle.seek(toOffset: 0)
         } catch {
@@ -469,11 +529,11 @@ extension BTree {
             j += 1
         }
         
-        let firstFreeBlockAddress = Helper.shared.uInt8ArrayToDecimalString(object)
-        if (UInt64.max == UInt64(firstFreeBlockAddress)) {
-            result += "First free block address: NIL\n"
+        let order = UInt64(Helper.shared.uInt8ArrayToDecimalString(object))!
+        if (UInt64.max == order) {
+            result += "Block size: NIL\n"
         } else {
-            result += "First free block address: \(firstFreeBlockAddress)\n"
+            result += "Block size: \(order)\n"
         }
         
         object = []
@@ -503,7 +563,7 @@ extension BTree {
         
         var result: Array<T> = Array<T>()
         
-        let length = type.getSize() * (blockSize) + (order * 8)
+        let length = type.getSize() * Int(blockSize) + (Int(order) * 8)
         do {
             try fileHandle.seek(toOffset: 0)
         } catch {

@@ -9,9 +9,10 @@
 import UIKit
 
 class DLicenseViewController: UIViewController {
-
+    
+    let policeApp = PoliceApp.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 }

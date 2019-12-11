@@ -101,6 +101,26 @@ class Car: Record {
     func initEmpty() -> Any {
         return Car() as Any
     }
+    
+    public func setAxlesCount(_ count: UInt8) {
+        self._axlesCount = count
+    }
+    
+    public func setWeight(_ weight: UInt16) {
+        self._weight = weight
+    }
+    
+    public func setInSearch(_ inSearch: Bool) {
+        self._inSearch = inSearch
+    }
+    
+    public func setdateEndEC(_ date: AppDate) {
+        self._dateEndEC = date
+    }
+    
+    public func setdateEndTC(_ date: AppDate) {
+        self._dateEndTC = date
+    }
 
     //MARK: - To Bytes
     func toBytes() -> [UInt8] {

@@ -11,13 +11,13 @@ import Foundation
 class Block<T: Record> {
     
     private var _address: UInt64
-    private var _size: Int
+    private var _size: UInt64
     private var _records: [T] = []
     private var _sons: [UInt64] = []
     private var _validRecords: Int = 0
     private let _type: T
     
-    init(_ object: T, _ size: Int, _ address: UInt64) {
+    init(_ object: T, _ size: UInt64, _ address: UInt64) {
         self._type = object
         self._address = address
         self._size = size
@@ -31,7 +31,7 @@ class Block<T: Record> {
         self._sons.append(UInt64.max)
     }
     
-    init(type: T, bytes: [UInt8], size: Int, address: UInt64) {
+    init(type: T, bytes: [UInt8], size: UInt64, address: UInt64) {
         self._type = type
         self._size = size
         self._address = address
@@ -75,7 +75,7 @@ class Block<T: Record> {
         }
     }
     
-    var size: Int {
+    var size: UInt64 {
         get {
             return self._size
         }
@@ -114,7 +114,7 @@ class Block<T: Record> {
     }
     
     func getBlockByteSize() -> Int {
-        return self.type.getSize() * self.size + ((self.size + 1) * 8)
+        return self.type.getSize() * Int(self.size) + Int(((self.size + 1) * 8))
     }
     
     func insert(_ record: T, _ position: Int, left: UInt64?, right: UInt64?) -> Bool {
@@ -161,7 +161,7 @@ class Block<T: Record> {
             self._sons[i + 1] = UInt64.max
             self._validRecords -= 1
         }
-        self._sons[size] = UInt64.max
+        self._sons[Int(size)] = UInt64.max
     }
     
     func toBytes() -> [UInt8] {

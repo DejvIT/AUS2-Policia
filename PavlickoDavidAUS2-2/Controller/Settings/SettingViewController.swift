@@ -72,7 +72,7 @@ class SettingViewController: UIViewController {
         if (bTreeCIDFileNameField.text != "" && bTreeCIDSizeField.text != "") {
             
             let filename = bTreeCIDFileNameField.text!
-            let blockSize = Int(bTreeCIDSizeField.text!)!
+            let blockSize = UInt64(bTreeCIDSizeField.text!)!
             
             let loadingSpinner = Spinner.customBackground(onView: self.view)
             DispatchQueue.global(qos: .background).async {
@@ -94,7 +94,7 @@ class SettingViewController: UIViewController {
         if (bTreeCVINFileNameField.text != "" && bTreeCVINSizeField.text != "") {
             
             let filename = bTreeCVINFileNameField.text!
-            let blockSize = Int(bTreeCVINSizeField.text!)!
+            let blockSize = UInt64(bTreeCVINSizeField.text!)!
             
             let loadingSpinner = Spinner.customBackground(onView: self.view)
             DispatchQueue.global(qos: .background).async {
@@ -116,7 +116,7 @@ class SettingViewController: UIViewController {
         if (bTreeDLFileNameField.text != "" && bTreeDLSizeField.text != "") {
             
             let filename = bTreeDLFileNameField.text!
-            let blockSize = Int(bTreeDLSizeField.text!)!
+            let blockSize = UInt64(bTreeDLSizeField.text!)!
             
             let loadingSpinner = Spinner.customBackground(onView: self.view)
             DispatchQueue.global(qos: .background).async {

@@ -14,7 +14,7 @@ class Generator {
     private var _bTreeTest: BTree<Test>!
     private var _testArray : Array<UInt32> = Array()
     
-    init(_ order: Int, _ filename: String) {
+    init(_ order: UInt64, _ filename: String) {
         self._bTreeTest = BTree<Test>(Test(), Test.comparator, filename, order)
     }
     
